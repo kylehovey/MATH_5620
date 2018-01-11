@@ -6,7 +6,7 @@ layout: default
 
 # Computing Hardware Epsilon
 
-From Wikipedia:
+From [Wikipedia](https://en.wikipedia.org/wiki/Machine_epsilon):
 
 >_Machine epsilon gives an upper bound on the relative error due to rounding in floating point arithmetic. This value characterizes computer arithmetic in the field of numerical analysis, and by extension in the subject of computational science. The quantity is also called macheps or unit roundoff, and it has the symbols Greek epsilon \\( \epsilon \\) or bold Roman **\\( u \\)**, respectively._
 
