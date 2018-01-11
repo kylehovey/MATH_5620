@@ -17,7 +17,7 @@ title: Numerical Solutions (Math 5620)
 email: khoveyc@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Here you will find my responses to problems found in USU's class on Numerical Solutions to Differential Equations.
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "/MATH_5620" # the subpath of your site, e.g. /blog
 url: "http://kylehovey.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: kylehovey
 
