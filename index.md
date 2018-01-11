@@ -1,7 +1,16 @@
 ---
+math: true
 layout: default
 ---
 
-# Homework 1
+## Software Manuals
 
-* Needs to be done.
+The list number refers to the corresponding problem number in each HW set.
+
+* HW 1
+  2. [Machine Epsilon](#)
+  4. [Absolute/Relative Approximation Error](#)
+
+## Assignments
+
+* [HW 1](#)

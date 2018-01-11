@@ -23,6 +23,7 @@ github_username: kylehovey
 
 # Build settings
 markdown: kramdown
+mathjax: true
 theme: jekyll-theme-modernist
 plugins:
   - jekyll-feed
