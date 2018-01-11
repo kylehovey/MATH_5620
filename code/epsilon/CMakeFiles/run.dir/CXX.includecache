@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/speleo/www/home/MATH_5620/code/epsilon/src/epsilon/epsilon.h
+
+/Users/speleo/www/home/MATH_5620/code/epsilon/src/main.cpp
+epsilon/epsilon.h
+/Users/speleo/www/home/MATH_5620/code/epsilon/src/epsilon/epsilon.h
+limits
+-
+iostream
+-
+

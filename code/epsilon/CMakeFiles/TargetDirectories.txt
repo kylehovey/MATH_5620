@@ -1,0 +1,3 @@
+/Users/speleo/www/home/MATH_5620/code/epsilon/CMakeFiles/rebuild_cache.dir
+/Users/speleo/www/home/MATH_5620/code/epsilon/CMakeFiles/edit_cache.dir
+/Users/speleo/www/home/MATH_5620/code/epsilon/CMakeFiles/run.dir
