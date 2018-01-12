@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/speleo/www/home/MATH_5620/code/error/src/absolute_error/absolute_error.h
+cmath
+-
+
+/Users/speleo/www/home/MATH_5620/code/error/src/main.cpp
+absolute_error/absolute_error.h
+/Users/speleo/www/home/MATH_5620/code/error/src/absolute_error/absolute_error.h
+relative_error/relative_error.h
+/Users/speleo/www/home/MATH_5620/code/error/src/relative_error/relative_error.h
+limits
+-
+iostream
+-
+
+/Users/speleo/www/home/MATH_5620/code/error/src/relative_error/relative_error.h
+../absolute_error/absolute_error.h
+/Users/speleo/www/home/MATH_5620/code/error/src/absolute_error/absolute_error.h
+
