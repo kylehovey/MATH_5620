@@ -1,0 +1,3 @@
+/Users/speleo/www/home/MATH_5620/code/logistic/CMakeFiles/rebuild_cache.dir
+/Users/speleo/www/home/MATH_5620/code/logistic/CMakeFiles/edit_cache.dir
+/Users/speleo/www/home/MATH_5620/code/logistic/CMakeFiles/run.dir
