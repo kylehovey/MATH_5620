@@ -1,10 +1,9 @@
 ---
 math: true
 permalink: /logistic
-layout: default
+title: Logistic Equation Analytic Solution
+layout: page
 ---
-
-# Logistic Equation Analytic Solution
 
 **Routine Name**: Logistic Equation
 

@@ -1,12 +1,11 @@
 ---
 math: true
 permalink: /error
-layout: default
+title: Relative and Absolute Error
+layout: page
 ---
 
-# Computing Hardware Epsilon
-
-**Routine Name**: Relative and Absolute Error
+**Routine Name(s)**: Relative and Absolute Error
 
 **Author**: Kyle Hovey
 
@@ -14,7 +13,7 @@ layout: default
 
 **Description/Purpose**:
 
-This templated function is designed to calculate absolute and relative error when the exact form of a number is known. If we define \\(v\\) to be the exact amount and \\(v_{\text{approx}}\\) to be an approximation, then absolute error (\\( \epsilon \\)) is defined to be:
+These templated functions are designed to calculate absolute and relative error when the exact form of a number is known. If we define \\(v\\) to be the exact amount and \\(v_{\text{approx}}\\) to be an approximation, then absolute error (\\( \epsilon \\)) is defined to be:
 
 ## \\[ \epsilon := \Big \lvert v - v_{\text{approx}} \Big \rvert \\]
 

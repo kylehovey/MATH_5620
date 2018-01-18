@@ -1,10 +1,9 @@
 ---
 math: true
 permalink: /epsilon
-layout: default
+title: Hardware Epsilon
+layout: page
 ---
-
-# Computing Hardware Epsilon
 
 **Routine Name**: Hardware Epsilon
 

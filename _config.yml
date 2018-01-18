@@ -21,10 +21,12 @@ baseurl: "/MATH_5620" # the subpath of your site, e.g. /blog
 url: "http://kylehovey.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: kylehovey
 
+permalink:           pretty
+paginate: 5
+
 # Build settings
 markdown: kramdown
 mathjax: true
-theme: jekyll-theme-modernist
 plugins:
   - jekyll-feed
 

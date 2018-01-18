@@ -5,9 +5,8 @@ layout: default
 
 ## Software Manuals
 
-The list number refers to the corresponding problem number in each HW set.
-
 * HW 1
-  2. [Machine Epsilon](./epsilon)
-  4. [Absolute/Relative Approximation Error](error)
-  6. [Logistic Equation](./logistic)
+  1. [Machine Epsilon](./epsilon)
+  2. [Absolute/Relative Approximation Error](error)
+  3. [Logistic Equation](./logistic)
+  4. [Spring Mass Equation](#)
