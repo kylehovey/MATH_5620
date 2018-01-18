@@ -1,6 +1,3 @@
-# Test Page
+# Math 5620 Repo
 
-A description.
-
-* A list
-* Of things
+Welcome! All pertinent code is located on the `gh-pages` branch of this repository. Please switch to it to see any code or examples referenced on the [website I made for this class](https://kylehovey.github.io/MATH_5620).
