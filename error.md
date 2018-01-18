@@ -16,11 +16,11 @@ layout: default
 
 This templated function is designed to calculate absolute and relative error when the exact form of a number is known. If we define \\(v\\) to be the exact amount and \\(v_{\text{approx}}\\) to be an approximation, then absolute error (\\( \epsilon \\)) is defined to be:
 
-\\[ \epsilon := \Big \lvert v - v_{\text{approx}} \Big \rvert \\]
+## \\[ \epsilon := \Big \lvert v - v_{\text{approx}} \Big \rvert \\]
 
 and relative error is defined to be:
 
-\\[ \eta := \frac{\epsilon}{\lvert v \rvert} \\]
+## \\[ \eta := \frac{\epsilon}{\lvert v \rvert} \\]
 
 **Input**:
 
