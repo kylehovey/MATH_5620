@@ -16,7 +16,7 @@ layout: default
 
 A logistic equation is a solution \\(P\\) to the differential equation:
 
-## \\[ \frac{dP}{dt} = \alpha P^2 - \beta P \\]
+## \\[ \frac{dP}{dt} = \alpha P - \beta P^2 \\]
 
 The solution of which can be massaged to the form:
 
