@@ -32,7 +32,7 @@ template <typename T>
  * @param gamma Damping constant (air resistance, etc...)
  * @param k Spring constant
  * @param endomorphism f Driving function (non-homogenous part)
- * @return endomorphism<T>
+ * @return Solution to spring-mass equation
  */
 endomorphism<T> genSpringMass(
     T yo = 0,

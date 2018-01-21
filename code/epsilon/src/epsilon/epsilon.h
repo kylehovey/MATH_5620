@@ -2,6 +2,10 @@
 #define EPSILON_H
 
 template <typename T>
+/**
+ * @param eps Initial value for epsilon
+ * @return Machine epsilon fir given type
+ */
 T computeEpsilon(T eps = 1) {
   // While epsilon is still visible to addition
   while (1 + eps != 1) {

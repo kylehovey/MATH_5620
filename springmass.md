@@ -10,9 +10,7 @@ layout: page
 **Author**: Kyle Hovey
 
 **Language**: C++
-
-**Description/Purpose**:
-
+**Description/Purpose**: 
 A spring-mass system with mass \\( m \\), damping coefficient \\( \gamma \\), and spring constant \\( k \\) is described by the differential equation
 
 # \\[ m y\'\'(t) + \gamma y\'(t) + k y(t) = f(t) \\]
@@ -138,7 +136,7 @@ template <typename T>
  * @param gamma Damping constant (air resistance, etc...)
  * @param k Spring constant
  * @param endomorphism f Driving function (non-homogenous part)
- * @return endomorphism<T>
+ * @return Solution to spring-mass equation
  */
 endomorphism<T> genSpringMass(
     T yo = 0,

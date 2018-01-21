@@ -5,13 +5,19 @@
 #include <math.h>
 
 template <typename T>
-using homomorphism = std::function<T(T)>;
+using endomorphism = std::function<T(T)>;
 
 template <typename T>
-homomorphism<T> genLogistic(T alpha, T beta, T Po) {
+/**
+ * @param alpha Alpha constant in logistic equation
+ * @param beta Beta constant in logistic equation
+ * @param Po Initial value of equation
+ * @return Logistic equation solution
+ */
+endomorphism<T> genLogistic(T alpha, T beta, T Po) {
   auto amp = ( alpha / Po - beta);
 
-  return homomorphism<T>(
+  return endomorphism<T>(
     [=] (T t) {
       return alpha / (amp * exp(-alpha * t) + beta);
     }

@@ -91,13 +91,13 @@ I made this function as abstract as possible. I probably could have gone with pa
 
 {% highlight c++ %}
 template <typename T>
-using homomorphism = std::function<T(T)>;
+using endomorphism = std::function<T(T)>;
 
 template <typename T>
-homomorphism<T> genLogistic(T alpha, T beta, T Po) {
+endomorphism<T> genLogistic(T alpha, T beta, T Po) {
   auto amp = ( alpha / Po - beta);
 
-  return homomorphism<T>(
+  return endomorphism<T>(
     [=] (T t) {
       return alpha / (amp * exp(-alpha * t) + beta);
     }
