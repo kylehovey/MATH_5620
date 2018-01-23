@@ -100,7 +100,7 @@ The spring-mass differential equation is a second degree linear equation, which 
 
 There is, however, a caveat. If \\( \lambda_1 = \lambda_2 \\) then there needs to be an additional \\( u(t) \\) that one of the solutions must be multiplied by to guarantee linear independence of the eigenfunctions of the differential equation.
 
-# \\[ y_c(t) = C_1 e^{\lambda_1 t} + C_2 u(t) e^{\lambda_2 t} : u(t) = t \\]
+# \\[ y_c(t) = C_1 e^{\lambda_1 t} + C_2 u(t) e^{\lambda_1 t} : u(t) = t \\]
 
 _Caveat_:
 
