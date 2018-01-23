@@ -98,6 +98,14 @@ The spring-mass differential equation is a second degree linear equation, which 
 
 # \\[ y_c(t) = C_1 e^{\lambda_1 t} + C_2 e^{\lambda_2 t} \\]
 
+There is, however, a caveat. If \\( \lambda_1 = \lambda_2 \\) then there needs to be an additional \\( u(t) \\) that one of the solutions must be multiplied by to guarantee linear independence of the eigenfunctions of the differential equation.
+
+# \\[ y_c(t) = C_1 e^{\lambda_1 t} + C_2 u(t) e^{\lambda_2 t} : u(t) = t \\]
+
+_Caveat_:
+
+>_This covers all possible cases of the eigenvalues for this second order differential equation. Sometimes, people will split the former case into two parts, one where you have real non-distinct roots, one where you have complex non-distinct roots. The latter involves writing the analytic solution in terms of \\( sin(x) \\) and \\( cos(x) \\), which is equivalent to the real non-distinct case when using Euler's Identity \\( e^{ix} = cos(x) + i sin(x) \\). Since the function I am writing only returns a value, and does not care how the solution is written, I am only using the two cases of equivalent roots and non-equivalent roots._
+
 The particular solution would involve quite a bit of integration, and most likely some clever use of the Wronskian determinant via the method of Variation of Parameters. As we are not yet equipped to compute such integration in code in this class, I have left the particular solution as a stub to be filled out later.
 
 Solving for the analytic particular solution to the homogenous part of the spring-mass differential equation, we can eliminate \\( C_1 \\) and \\( C_2 \\) by algebraicly determining their equivalents with respect to \\( y_o \\) and \\( y'_o \\).
@@ -164,6 +172,13 @@ endomorphism<T> genSpringMass(
     (-eigens[0] * yo + dyo) / denom
   };
 
+  // Determine additional u(t) required for linear independance
+  const endomorphism<T> u(
+    eigens[0] == eigens[1] ?
+      (endomorphism<T>) [](T t) { return t; } :
+      (endomorphism<T>) [](T t) { (void) t; return 1; }
+  );
+
   // Stub for determining particular solution
   // TODO: Find particular solution
   (void) f;
@@ -185,7 +200,7 @@ endomorphism<T> genSpringMass(
        */
       return (
         coeffs[0] * std::exp(eigens[0] * t) +
-        coeffs[1] * std::exp(eigens[1] * t) +
+        coeffs[1] * std::exp(eigens[1] * t) * u(t) +
         particular(t)
       ).real();
     }

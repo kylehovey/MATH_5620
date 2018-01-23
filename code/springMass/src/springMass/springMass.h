@@ -60,6 +60,13 @@ endomorphism<T> genSpringMass(
     (-eigens[0] * yo + dyo) / denom
   };
 
+  // Determine additional u(t) required for linear independance
+  const endomorphism<T> u(
+    eigens[0] == eigens[1] ?
+      (endomorphism<T>) [](T t) { return t; } :
+      (endomorphism<T>) [](T t) { (void) t; return 1; }
+  );
+
   // Stub for determining particular solution
   // TODO: Find particular solution
   (void) f;
@@ -81,7 +88,7 @@ endomorphism<T> genSpringMass(
        */
       return (
         coeffs[0] * std::exp(eigens[0] * t) +
-        coeffs[1] * std::exp(eigens[1] * t) +
+        coeffs[1] * std::exp(eigens[1] * t) * u(t) +
         particular(t)
       ).real();
     }
