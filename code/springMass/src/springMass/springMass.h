@@ -52,19 +52,22 @@ endomorphism<T> genSpringMass(
     (-gamma - desc) / std::complex<double>(2 * m)
   };
 
+  // Determine whether or not we have real or repeated roots
+  auto distinct = eigens[0] != eigens[1];
+
   // Determine the leading coefficients of the solution
   auto denom = eigens[1] - eigens[0];
 
   std::complex<T> coeffs[2] = {
-    (eigens[1] * yo - dyo) / denom,
-    (-eigens[0] * yo + dyo) / denom
+    distinct ? (eigens[1] * yo - dyo) / denom : yo,
+    distinct ? (-eigens[0] * yo + dyo) / denom : dyo - eigens[0] * yo
   };
 
   // Determine additional u(t) required for linear independance
   const endomorphism<T> u(
-    eigens[0] == eigens[1] ?
-      (endomorphism<T>) [](T t) { return t; } :
-      (endomorphism<T>) [](T t) { (void) t; return 1; }
+    distinct ?
+      (endomorphism<T>) [](T t) { (void) t; return 1; } :
+      (endomorphism<T>) [](T t) { return t; }
   );
 
   // Stub for determining particular solution

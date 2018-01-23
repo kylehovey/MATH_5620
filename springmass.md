@@ -108,7 +108,7 @@ _Caveat_:
 
 The particular solution would involve quite a bit of integration, and most likely some clever use of the Wronskian determinant via the method of Variation of Parameters. As we are not yet equipped to compute such integration in code in this class, I have left the particular solution as a stub to be filled out later.
 
-Solving for the analytic particular solution to the homogenous part of the spring-mass differential equation, we can eliminate \\( C_1 \\) and \\( C_2 \\) by algebraicly determining their equivalents with respect to \\( y_o \\) and \\( y'_o \\).
+Solving for the analytic particular solution to the homogenous part of the spring-mass differential equation, we can eliminate \\( C_1 \\) and \\( C_2 \\) by algebraicly determining their equivalents with respect to \\( y_o \\) and \\( y'_o \\). The coefficients will be different for distinct vs repeated roots, so a ternary statement is used in the following code to handle either case.
 
 All this leaves for programming is determining the eigenvalues and leading coefficients, then to construct a function to determine the position of the mass at time `t`:
 
@@ -164,19 +164,22 @@ endomorphism<T> genSpringMass(
     (-gamma - desc) / std::complex<double>(2 * m)
   };
 
+  // Determine whether or not we have real or repeated roots
+  auto distinct = eigens[0] != eigens[1];
+
   // Determine the leading coefficients of the solution
   auto denom = eigens[1] - eigens[0];
 
   std::complex<T> coeffs[2] = {
-    (eigens[1] * yo - dyo) / denom,
-    (-eigens[0] * yo + dyo) / denom
+    distinct ? (eigens[1] * yo - dyo) / denom : yo,
+    distinct ? (-eigens[0] * yo + dyo) / denom : dyo - eigens[0] * yo
   };
 
   // Determine additional u(t) required for linear independance
   const endomorphism<T> u(
-    eigens[0] == eigens[1] ?
-      (endomorphism<T>) [](T t) { return t; } :
-      (endomorphism<T>) [](T t) { (void) t; return 1; }
+    distinct ?
+      (endomorphism<T>) [](T t) { (void) t; return 1; } :
+      (endomorphism<T>) [](T t) { return t; }
   );
 
   // Stub for determining particular solution
