@@ -13,9 +13,12 @@ namespace Matrix {
   using binaryDual = std::function<T(const uint&, const uint&)>;
 
   template <typename T>
-  const binaryDual<T> kronecker = binaryDual<T>(
+  const binaryDual<T> zero = binaryDual<T>(
       [](const uint& a, const uint& b) {
-        return (T) ((a == b) ? 1 : 0);
+        (void) a;
+        (void) b;
+
+        return (T) (a == b ? 1 : 0);
       }
   );
 
@@ -32,8 +35,14 @@ namespace Matrix {
       Matrix(
           const uint& m = 3,
           const uint& n = 3,
-          const binaryDual<T>& valMap = kronecker<T>
+          const binaryDual<T>& valMap = zero<T>
       );
+
+      /**
+       * Get size
+       * @return Tuple of the size
+       */
+      std::tuple<uint, uint> getSize() const;
 
       /**
        * Get the value at the ith row and jth column
@@ -61,6 +70,9 @@ namespace Matrix {
        * Transpose this matrix
        */
       void transpose();
+
+      Matrix<T> add(const Matrix<T>& another) const;
+      Matrix<T> multiply(const Matrix<T>& another) const;
     private:
       /**
        * Determine whether or not values are within bounds
@@ -69,6 +81,20 @@ namespace Matrix {
        * @return True if in range, false if not
        */
       bool isInBounds(const uint& i, const uint& j) const;
+
+      /**
+       * Add another matrix to this one and return the result
+       * @param another Another matrix
+       * @return This matrix + another
+       */
+      //Matrix<T> add(const Matrix<T>& another) const;
+
+      /**
+       * Multiply another matrix by this one and return the result
+       * @param another Another matrix
+       * @return This matrix * another
+       */
+      //Matrix<T> multiply(const Matrix<T>& another) const;
 
       // Size of matrix
       uint m, n;
@@ -93,6 +119,11 @@ namespace Matrix {
   }
 
   /* ===== Public Methods ===== */
+
+  template <typename T>
+  std::tuple<uint, uint> Matrix<T>::getSize() const {
+    return { this->m, this->n };
+  }
 
   template <typename T>
   void Matrix<T>::fillWith(const binaryDual<T>& valMap) {
@@ -130,7 +161,54 @@ namespace Matrix {
     }
   }
 
+  template <typename T>
+  Matrix<T> Matrix<T>::add(const Matrix<T>& another) const {
+    // Determine compatibility
+    const auto [ M, N ] = another.getSize();
+
+    if (this->m == M && this->m == M) {
+      auto out = Matrix<T>(this->m, this->n);
+
+      for (uint i = 0; i < this->m; ++i) {
+        for (uint j = 0; j < this->n; ++j) {
+          out.setVal(i, j, this->getVal(i, j) + another.getVal(i, j));
+        }
+      }
+
+      return out;
+    } else {
+      throw std::out_of_range("Matrices can not be added, wrong dimensions.");
+    }
+  }
+
+  template <typename T>
+  Matrix<T> Matrix<T>::multiply(const Matrix<T>& another) const {
+    // Determine compatibility
+    const auto [ M, N ] = another.getSize();
+
+    if (this->n == M) {
+      auto out = Matrix<T>(this->m, N);
+
+      for (uint i = 0; i < this->m; ++i) {
+        for (uint j = 0; j < N; ++j) {
+          T sum = 0;
+
+          for (uint k = 0; k < M; ++k) {
+            sum += this->getVal(i, k) * another.getVal(k, j);
+          }
+
+          out.setVal(i, j, sum);
+        }
+      }
+
+      return out;
+    } else {
+      throw std::out_of_range("Matrices can not be multiplied.");
+    }
+  }
+
   /* ===== Private Methods ===== */
+
   template <typename T>
   bool Matrix<T>::isInBounds(const uint& i, const uint& j) const {
     return (i >= 0) && (i < this->m) && (j >= 0) && (j < this->n);
