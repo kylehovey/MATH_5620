@@ -44,6 +44,14 @@ namespace Matrix {
       T getVal(const uint& i, const uint& j) const;
 
       /**
+       * Set the value at the ith row and jth column
+       * @param i Row number
+       * @param j Column number
+       * @param val Value to set
+       */
+      void setVal(const uint& i, const uint& j, const T& val);
+
+      /**
        * Fill the matrix with values determined by indices
        * @param valMap Function to fill matrix with values
        */
@@ -90,7 +98,7 @@ namespace Matrix {
   void Matrix<T>::fillWith(const binaryDual<T>& valMap) {
     for (uint i = 0; i < m; ++i) {
       for (uint j = 0; j < n; ++j) {
-        this->matrix[i][j] = valMap(i, j);
+        this->setVal(i, j, valMap(i, j));
       }
     }
   }
@@ -99,6 +107,15 @@ namespace Matrix {
   T Matrix<T>::getVal(const uint& i, const uint& j) const {
     if (isInBounds(i, j)) {
       return this->matrix[i][j];
+    } else {
+      throw std::out_of_range("Matrix index out of range.");
+    }
+  }
+
+  template <typename T>
+  void Matrix<T>::setVal(const uint& i, const uint& j, const T& val) {
+    if (isInBounds(i, j)) {
+      this->matrix[i][j] = val;
     } else {
       throw std::out_of_range("Matrix index out of range.");
     }
