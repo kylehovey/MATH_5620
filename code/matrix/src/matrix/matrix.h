@@ -100,6 +100,13 @@ namespace Matrix {
       Matrix<T> add(const Matrix<T>& another) const;
 
       /**
+       * Subtract another matrix from this one and return the result
+       * @param another Another matrix
+       * @return This matrix - another
+       */
+      Matrix<T> subtract(const Matrix<T>& another) const;
+
+      /**
        * Multiply this matrix by a scalar and return the result
        * @param scalar Value to multiply this matrix by
        * @return Scalar * this matrix
@@ -199,23 +206,33 @@ namespace Matrix {
     }
   }
 
+  /* ===== Private Methods ===== */
+
   template <typename T>
   Matrix<T> Matrix<T>::add(const Matrix<T>& another) const {
     // Determine compatibility
     const auto [ M, N ] = another.getSize();
 
     if (this->m == M && this->m == M) {
-      auto out = Matrix<T>(this->m, this->n);
-
-      for (uint i = 0; i < this->m; ++i) {
-        for (uint j = 0; j < this->n; ++j) {
-          out.setVal(i, j, this->getVal(i, j) + another.getVal(i, j));
-        }
-      }
-
-      return out;
+      return Matrix<T>(this->m, this->n, [&](const uint& a, const uint& b) {
+        return this->getVal(a, b) + another.getVal(a, b);
+      });
     } else {
-      throw std::out_of_range("Matrices can not be added, wrong dimensions.");
+      throw std::out_of_range("Can not be added, wrong dimensions.");
+    }
+  }
+
+  template <typename T>
+  Matrix<T> Matrix<T>::subtract(const Matrix<T>& another) const {
+    // Determine compatibility
+    const auto [ M, N ] = another.getSize();
+
+    if (this->m == M && this->m == M) {
+      return Matrix<T>(this->m, this->n, [&](const uint& a, const uint& b) {
+        return this->getVal(a, b) - another.getVal(a, b);
+      });
+    } else {
+      throw std::out_of_range("Can not be subtracted, wrong dimensions.");
     }
   }
 
@@ -251,8 +268,6 @@ namespace Matrix {
       throw std::out_of_range("Matrices can not be multiplied.");
     }
   }
-
-  /* ===== Private Methods ===== */
 
   template <typename T>
   bool Matrix<T>::isInBounds(const uint& i, const uint& j) const {
