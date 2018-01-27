@@ -152,7 +152,11 @@ namespace Matrix {
   template <typename T>
   Matrix<T>::Matrix(const std::vector<std::vector<T>>& init) :
       Matrix(init.size(), init[0].size(), [&](const uint& a, const uint& b) {
-            return init[a][b];
+        if (init[a].size() == init[0].size()) {
+          return init[a][b];
+        } else {
+          throw std::out_of_range("2D array must be rectangular.");
+        }
       }) { };
 
   /* ===== Public Methods ===== */
