@@ -28,6 +28,7 @@ namespace Matrix {
   class Matrix {
     public:
       /**
+       * Construct using size and fill function
        * @param m Number of rows
        * @param n Number of columns
        * @param valMap Function to fill matrix with initial values
@@ -37,6 +38,12 @@ namespace Matrix {
           const uint& n = 3,
           const binaryDual<T>& valMap = zero<T>
       );
+
+      /**
+       * Construct using a 2D matrix
+       * @param init 2D vector to build matrix from
+       */
+      Matrix(const std::vector<std::vector<T>>& init);
 
       /**
        * Get size
@@ -114,6 +121,16 @@ namespace Matrix {
     // Fill with default funciton
     this->fillWith(valMap);
   }
+
+  template <typename T>
+  Matrix<T>::Matrix(const std::vector<std::vector<T>>& init) :
+      Matrix(init.size(), init[0].size(), binaryDual<T>(
+          [&](const uint& a, const uint& b) {
+            return init[a][b];
+          }
+      )
+  ) { };
+
 
   /* ===== Public Methods ===== */
 
