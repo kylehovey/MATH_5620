@@ -120,6 +120,13 @@ namespace Matrix {
        */
       Matrix<T> multiply(const Matrix<T>& another) const;
 
+      /**
+       * Determine whether or not another matrix is equal to this one
+       * @param another Another matrix
+       * @return True if matrix is equal
+       */
+      bool isEqualTo(const Matrix<T>& another) const;
+
       // Size of matrix
       uint m, n;
 
@@ -267,6 +274,25 @@ namespace Matrix {
     } else {
       throw std::out_of_range("Matrices can not be multiplied.");
     }
+  }
+
+  template <typename T>
+  bool Matrix<T>::isEqualTo(const Matrix<T>& another) const {
+    const auto [ M, N ] = another.getSize();
+
+    if (this->m == M && this->n == n) {
+      for (uint i = 0; i < M; i++) {
+        for (uint j = 0; j < N; j++) {
+          if (this->getVal(i, j) != another.getVal(i, j)) {
+            return false;
+          }
+        }
+      }
+    } else {
+      return false;
+    }
+
+    return true;
   }
 
   template <typename T>
