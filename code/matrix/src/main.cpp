@@ -31,8 +31,6 @@ int main() {
     std::cout << std::endl;
   }
 
-  // Some test operation here
-
   std::cout << std::endl;
 
   for (int i = 0; i < 5; i++) {

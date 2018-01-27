@@ -94,6 +94,13 @@ namespace Matrix {
       Matrix<T> add(const Matrix<T>& another) const;
 
       /**
+       * Multiply this matrix by a scalar and return the result
+       * @param scalar Value to multiply this matrix by
+       * @return Scalar * this matrix
+       */
+      Matrix<T> scalarMult(const T& scalar) const;
+
+      /**
        * Multiply another matrix by this one and return the result
        * @param another Another matrix
        * @return This matrix * another
@@ -124,13 +131,9 @@ namespace Matrix {
 
   template <typename T>
   Matrix<T>::Matrix(const std::vector<std::vector<T>>& init) :
-      Matrix(init.size(), init[0].size(), binaryDual<T>(
-          [&](const uint& a, const uint& b) {
+      Matrix(init.size(), init[0].size(), [&](const uint& a, const uint& b) {
             return init[a][b];
-          }
-      )
-  ) { };
-
+      }) { };
 
   /* ===== Public Methods ===== */
 
@@ -193,6 +196,13 @@ namespace Matrix {
     } else {
       throw std::out_of_range("Matrices can not be added, wrong dimensions.");
     }
+  }
+
+  template <typename T>
+  Matrix<T> Matrix<T>::scalarMult(const T& scalar) const {
+    return Matrix<T>(this->m, this->n, [&](const uint& a, const uint& b) {
+      return scalar * this->getVal(a, b);
+    });
   }
 
   template <typename T>
