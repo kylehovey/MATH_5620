@@ -18,7 +18,7 @@ namespace Matrix {
         (void) a;
         (void) b;
 
-        return (T) (a == b ? 1 : 0);
+        return (T) 0;
       }
   );
 
@@ -70,9 +70,6 @@ namespace Matrix {
        * Transpose this matrix
        */
       void transpose();
-
-      Matrix<T> add(const Matrix<T>& another) const;
-      Matrix<T> multiply(const Matrix<T>& another) const;
     private:
       /**
        * Determine whether or not values are within bounds
@@ -87,14 +84,14 @@ namespace Matrix {
        * @param another Another matrix
        * @return This matrix + another
        */
-      //Matrix<T> add(const Matrix<T>& another) const;
+      Matrix<T> add(const Matrix<T>& another) const;
 
       /**
        * Multiply another matrix by this one and return the result
        * @param another Another matrix
        * @return This matrix * another
        */
-      //Matrix<T> multiply(const Matrix<T>& another) const;
+      Matrix<T> multiply(const Matrix<T>& another) const;
 
       // Size of matrix
       uint m, n;

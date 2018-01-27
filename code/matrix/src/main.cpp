@@ -24,7 +24,7 @@ int main() {
     std::cout << std::endl;
   }
 
-  A = A.multiply(B);
+  // Some test operation here
 
   std::cout << std::endl;
 
