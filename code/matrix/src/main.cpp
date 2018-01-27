@@ -40,6 +40,8 @@ int main() {
     std::cout << std::endl;
   }
 
+  std::cout << A.trace() << std::endl;
+
 
   return EXIT_SUCCESS;
 }

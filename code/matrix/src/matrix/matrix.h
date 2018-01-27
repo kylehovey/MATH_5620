@@ -60,6 +60,12 @@ namespace Matrix {
       T getVal(const uint& i, const uint& j) const;
 
       /**
+       * Get the trace of this matrix
+       * @return The trace
+       */
+      T trace() const;
+
+      /**
        * Set the value at the ith row and jth column
        * @param i Row number
        * @param j Column number
@@ -157,6 +163,21 @@ namespace Matrix {
       return this->matrix[i][j];
     } else {
       throw std::out_of_range("Matrix index out of range.");
+    }
+  }
+
+  template <typename T>
+  T Matrix<T>::trace() const {
+    T sum = 0;
+
+    if (this->m == this->n) {
+      for (uint i = 0; i < this->m; ++i) {
+        sum += this->matrix[i][i];
+      }
+
+      return sum;
+    } else {
+      throw std::domain_error("Matrix must be square to find trace.");
     }
   }
 
