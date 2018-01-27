@@ -6,18 +6,20 @@ int main() {
       return a - b;
   });
 
-  for (int i = 0; i < 5; i++) {
-    for (int j = 0; j < 5; j++) {
-      std::cout << A.getVal(i, j) << " ";
-    }
-    std::cout << std::endl;
-  }
+  Matrix::Matrix<int> B(5, 5);
+
+  //for (int i = 0; i < 5; i++) {
+  //  for (int j = 0; j < 5; j++) {
+  //    std::cout << A.getVal(i, j) << " ";
+  //  }
+  //  std::cout << std::endl;
+  //}
 
   A.transpose();
 
   for (int i = 0; i < 5; i++) {
     for (int j = 0; j < 5; j++) {
-      std::cout << A.getVal(i, j) << " ";
+      std::cout << B.getVal(i, j) << " ";
     }
     std::cout << std::endl;
   }

@@ -54,6 +54,14 @@ namespace Matrix {
        */
       void transpose();
     private:
+      /**
+       * Determine whether or not values are within bounds
+       * @param i Row number
+       * @param j Column number
+       * @return True if in range, false if not
+       */
+      bool isInBounds(const uint& i, const uint& j) const;
+
       // Size of matrix
       uint m, n;
 
@@ -89,7 +97,11 @@ namespace Matrix {
 
   template <typename T>
   T Matrix<T>::getVal(const uint& i, const uint& j) const {
-    return this->matrix[i][j];
+    if (isInBounds(i, j)) {
+      return this->matrix[i][j];
+    } else {
+      throw std::out_of_range("Matrix index out of range.");
+    }
   }
 
   template <typename T>
@@ -99,6 +111,12 @@ namespace Matrix {
         std::swap(this->matrix[i][j], this->matrix[j][i]);
       }
     }
+  }
+
+  /* ===== Private Methods ===== */
+  template <typename T>
+  bool Matrix<T>::isInBounds(const uint& i, const uint& j) const {
+    return (i >= 0) && (i < this->m) && (j >= 0) && (j < this->n);
   }
 };
 
