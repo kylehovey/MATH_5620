@@ -111,13 +111,22 @@ namespace Matrix {
       friend Matrix<U> operator-(const Matrix<U>& lhs, const Matrix<U>& rhs);
 
       /**
+       * Multiply two matrices
+       * @param lhs Scalar value
+       * @param rhs Matrix to scale
+       * @return Their matrix sum
+       */
+      template <typename U>
+      friend Matrix<U> operator*(const Matrix<U>& lhs, const Matrix<U>& rhs);
+
+      /**
        * Scalar multiply a matrix
        * @param lhs Scalar value
        * @param rhs Matrix to scale
        * @return Their matrix sum
        */
-      template <typename U, typename V>
-      friend Matrix<V> operator*(const U& lhs, const Matrix<V>& rhs);
+      template <typename U>
+      friend Matrix<U> operator*(const U& lhs, const Matrix<U>& rhs);
 
       /**
        * Scalar multiply a matrix
@@ -125,8 +134,8 @@ namespace Matrix {
        * @param rhs Scalar value
        * @return Their matrix sum
        */
-      template <typename U, typename V>
-      friend Matrix<V> operator*(const Matrix<V>& lhs, const U& rhs);
+      template <typename U>
+      friend Matrix<U> operator*(const Matrix<U>& lhs, const U& rhs);
 
       /**
        * Compare matrix equality
@@ -145,6 +154,18 @@ namespace Matrix {
        */
       template <typename U>
       friend bool operator!=(const Matrix<U>& lhs, const Matrix<U>& rhs);
+
+      /**
+       * Output a matrix to the output stream
+       * @param stream The output stream
+       * @param matrix The matrix to output
+       * @return The stream
+       */
+      template <typename U>
+      friend std::ostream& operator<<(
+          std::ostream& stream,
+          const Matrix<U>& matrix
+      );
     private:
       /**
        * Determine whether or not values are within bounds

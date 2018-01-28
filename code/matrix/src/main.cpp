@@ -3,8 +3,12 @@
 #include <vector>
 
 int main() {
-  Matrix::Matrix<int> A(5, 5, (Matrix::binaryDual<int>) [](const uint& a, const uint& b) {
-    return a % (b + 1);
+  Matrix::Matrix<int> A({
+      { 1, 0, 0, 0, 0 },
+      { 0, 1, 0, 0, 0 },
+      { 0, 0, 1, 0, 0 },
+      { 0, 0, 0, 1, 0 },
+      { 0, 0, 0, 0, 1 }
   });
 
   Matrix::Matrix<int> B({
@@ -15,23 +19,21 @@ int main() {
       { 6, 7, 8, 9, 0 }
   });
 
-  auto C = A + B;
+  auto C = 5 * (A + B) * A;
 
-  for (int i = 0; i < 5; i++) {
-    for (int j = 0; j < 5; j++) {
-      std::cout << C.getVal(i, j) << " ";
-    }
-    std::cout << std::endl;
+  if (C != A) {
+    std::cout << "Not equal!" << std::endl;
   }
 
-  std::cout << std::endl;
+  auto D = C;
 
-  for (int i = 0; i < 5; i++) {
-    for (int j = 0; j < 5; j++) {
-      std::cout << B.getVal(i, j) << " ";
-    }
-    std::cout << std::endl;
+  if (C == D) {
+    std::cout << "Equal!" << std::endl;
   }
+
+  std::cout << A << std::endl;
+  std::cout << B << std::endl;
+  std::cout << C << std::endl;
 
   return EXIT_SUCCESS;
 }
