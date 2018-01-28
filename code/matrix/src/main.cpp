@@ -19,8 +19,7 @@ int main() {
       { 6, 7, 8, 9, 0 }
   });
 
-  std::cout << A << std::endl;
-  std::cout << B << std::endl;
+  std::cout << A.isDiagonal() << std::endl;
 
   auto C = 5 * (A + B) * A;
 

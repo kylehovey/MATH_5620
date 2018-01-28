@@ -56,7 +56,14 @@ namespace Matrix {
   bool Matrix<T>::isDiagonal() const {
     const auto [ m, n ] = this->getSize();
 
-    // TODO
+    for (uint i = 0; i < m; ++i) {
+      for (uint j = 0; j < n; ++j) {
+        if (i != j && this->getVal(i, j) != 0) {
+          return false;
+        }
+      }
+    }
+
     return true;
   }
 
