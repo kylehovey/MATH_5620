@@ -3,7 +3,7 @@
 #include <vector>
 
 int main() {
-  Matrix::Matrix<int> A({
+  Matrix::Matrix<double> A({
       { 1, 0, 0, 0, 0 },
       { 0, 1, 0, 0, 0 },
       { 0, 0, 1, 0, 0 },
@@ -11,7 +11,7 @@ int main() {
       { 0, 0, 0, 0, 1 }
   });
 
-  Matrix::Matrix<int> B({
+  Matrix::Matrix<double> B({
       { 1, 2, 3, 4, 5 },
       { 6, 7, 8, 9, 0 },
       { 1, 2, 3, 4, 5 },

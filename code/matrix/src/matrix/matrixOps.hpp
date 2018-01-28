@@ -20,14 +20,14 @@ namespace Matrix {
     return lhs.multiply(rhs);
   }
 
-  template <typename U>
-  Matrix<U> operator*(const U& lhs, const Matrix<U>& rhs) {
-    return rhs.scalarMult(lhs);
+  template <typename U, typename V>
+  Matrix<U> operator*(const V& lhs, const Matrix<U>& rhs) {
+    return rhs.scalarMult((U) lhs);
   }
 
-  template <typename U>
-  Matrix<U> operator*(const Matrix<U>& lhs, const U& rhs) {
-    return lhs.scalarMult(rhs);
+  template <typename U, typename V>
+  Matrix<U> operator*(const Matrix<U>& lhs, const V& rhs) {
+    return lhs.scalarMult((U) rhs);
   }
 
   template <typename U>

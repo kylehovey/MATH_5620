@@ -49,7 +49,8 @@ namespace Matrix {
        * Copy constructor
        * @param another Another matrix
        */
-      Matrix(const Matrix<T>& another);
+      template <typename U>
+      Matrix(const Matrix<U>& another);
 
       /**
        * Get size
@@ -91,7 +92,6 @@ namespace Matrix {
       void transpose();
 
       /* ===== Operators ===== */
-
       /**
        * Add two matrices
        * @param lhs First matrix to add
@@ -125,8 +125,8 @@ namespace Matrix {
        * @param rhs Matrix to scale
        * @return Their matrix sum
        */
-      template <typename U>
-      friend Matrix<U> operator*(const U& lhs, const Matrix<U>& rhs);
+      template <typename U, typename V>
+      friend Matrix<U> operator*(const V& lhs, const Matrix<U>& rhs);
 
       /**
        * Scalar multiply a matrix
@@ -134,8 +134,8 @@ namespace Matrix {
        * @param rhs Scalar value
        * @return Their matrix sum
        */
-      template <typename U>
-      friend Matrix<U> operator*(const Matrix<U>& lhs, const U& rhs);
+      template <typename U, typename V>
+      friend Matrix<U> operator*(const Matrix<U>& lhs, const V& rhs);
 
       /**
        * Compare matrix equality

@@ -28,12 +28,13 @@ namespace Matrix {
       }) { };
 
   template <typename T>
-  Matrix<T>::Matrix(const Matrix<T>& another) : 
+  template <typename U>
+  Matrix<T>::Matrix(const Matrix<U>& another) : 
       Matrix(
           std::get<0>(another.getSize()),
           std::get<1>(another.getSize()),
           [&](const uint& a, const uint& b) {
-            return another.getVal(a, b);
+            return (T) another.getVal(a, b);
           }
       ) { }
 
