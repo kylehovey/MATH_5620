@@ -68,6 +68,28 @@ namespace Matrix {
   }
 
   template <typename T>
+  bool Matrix<T>::isDiagDom() const {
+    const auto [ m, n ] = this->getSize();
+
+    for (uint i = 0; i < m; ++i) {
+      T sum = 0;
+
+      for (uint j = 0; j < n; ++j) {
+        if (i != j) {
+          sum += this->getVal(i, j);
+        }
+      }
+      
+      if (this->getVal(i, i) < sum) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+
+  template <typename T>
   void Matrix<T>::fillWith(const binaryDual<T>& valMap) {
     const auto [ m , n ] = this->getSize();
 

@@ -20,6 +20,7 @@ int main() {
   });
 
   std::cout << A.isDiagonal() << std::endl;
+  std::cout << B.isDiagDom() << std::endl;
 
   auto C = 5 * (A + B) * A;
 

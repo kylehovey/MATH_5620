@@ -12,16 +12,6 @@ namespace Matrix {
   template <typename T>
   using binaryDual = std::function<T(const uint&, const uint&)>;
 
-  template <typename T>
-  const binaryDual<T> zero = binaryDual<T>(
-      [](const uint& a, const uint& b) {
-        (void) a;
-        (void) b;
-
-        return (T) 0;
-      }
-  );
-
   /* ===== Class Definition ===== */
 
   template <typename T>
@@ -36,7 +26,14 @@ namespace Matrix {
       Matrix(
           const uint& m = 3,
           const uint& n = 3,
-          const binaryDual<T>& valMap = zero<T>
+          const binaryDual<T>& valMap = binaryDual<T>(
+              [](const uint& a, const uint& b) {
+                (void) a;
+                (void) b;
+
+                return T(0);
+              }
+          )
       );
 
       /**
@@ -69,6 +66,12 @@ namespace Matrix {
        * @return True if diagonal
        */
       bool isDiagonal() const;
+
+      /**
+       * Determine whether or not matrix is diagonally dominant
+       * @return True if diagonally dominant
+       */
+      bool isDiagDom() const;
 
       /**
        * Get the value at the ith row and jth column
@@ -179,6 +182,8 @@ namespace Matrix {
           const Matrix<U>& matrix
       );
     private:
+      /* ===== Private Methods ===== */
+
       /**
        * Determine whether or not values are within bounds
        * @param i Row number
@@ -221,6 +226,8 @@ namespace Matrix {
        * @return True if matrix is equal
        */
       bool isEqualTo(const Matrix<T>& another) const;
+
+      /* ===== Private Variables ===== */
 
       // Size of matrix
       uint _m, _n;
