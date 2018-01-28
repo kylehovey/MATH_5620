@@ -15,9 +15,11 @@ int main() {
       { 6, 7, 8, 9, 0 }
   });
 
+  auto C = A + B;
+
   for (int i = 0; i < 5; i++) {
     for (int j = 0; j < 5; j++) {
-      std::cout << A.getVal(i, j) << " ";
+      std::cout << C.getVal(i, j) << " ";
     }
     std::cout << std::endl;
   }
