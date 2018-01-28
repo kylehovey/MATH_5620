@@ -46,6 +46,13 @@ namespace Matrix {
   }
 
   template <typename T>
+  bool Matrix<T>::isSquare() const {
+    const auto [ m, n ] = this->getSize();
+
+    return m == n;
+  }
+
+  template <typename T>
   void Matrix<T>::fillWith(const binaryDual<T>& valMap) {
     for (uint i = 0; i < m; ++i) {
       for (uint j = 0; j < n; ++j) {
@@ -67,7 +74,7 @@ namespace Matrix {
   T Matrix<T>::trace() const {
     T sum = 0;
 
-    if (this->m == this->n) {
+    if (this->isSquare()) {
       for (uint i = 0; i < this->m; ++i) {
         sum += this->matrix[i][i];
       }

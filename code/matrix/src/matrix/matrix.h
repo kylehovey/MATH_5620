@@ -59,6 +59,12 @@ namespace Matrix {
       std::tuple<uint, uint> getSize() const;
 
       /**
+       * Determine whether or not matrix is square
+       * @return True if square
+       */
+      bool isSquare() const;
+
+      /**
        * Get the value at the ith row and jth column
        * @param i Row number
        * @param j Column number
