@@ -9,9 +9,9 @@ namespace Matrix {
       const uint& m,
       const uint& n,
       const binaryDual<T>& valMap
-  ) : m(m), n(n) {
+  ) : _m(m), _n(n) {
     // Initialize 2D matrix to zeroes
-    this->matrix = std::vector<std::vector<T>>(m, std::vector<T>(n, (T) 0));
+    this->_matrix = std::vector<std::vector<T>>(m, std::vector<T>(n, (T) 0));
 
     // Fill with default funciton
     this->fillWith(valMap);
@@ -42,7 +42,7 @@ namespace Matrix {
 
   template <typename T>
   std::tuple<uint, uint> Matrix<T>::getSize() const {
-    return { this->m, this->n };
+    return { this->_m, this->_n };
   }
 
   template <typename T>
@@ -53,7 +53,17 @@ namespace Matrix {
   }
 
   template <typename T>
+  bool Matrix<T>::isDiagonal() const {
+    const auto [ m, n ] = this->getSize();
+
+    // TODO
+    return true;
+  }
+
+  template <typename T>
   void Matrix<T>::fillWith(const binaryDual<T>& valMap) {
+    const auto [ m , n ] = this->getSize();
+
     for (uint i = 0; i < m; ++i) {
       for (uint j = 0; j < n; ++j) {
         this->setVal(i, j, valMap(i, j));
@@ -64,7 +74,7 @@ namespace Matrix {
   template <typename T>
   T Matrix<T>::getVal(const uint& i, const uint& j) const {
     if (isInBounds(i, j)) {
-      return this->matrix[i][j];
+      return this->_matrix[i][j];
     } else {
       throw std::out_of_range("Matrix index out of range.");
     }
@@ -72,11 +82,12 @@ namespace Matrix {
 
   template <typename T>
   T Matrix<T>::trace() const {
+    const auto m = std::get<1>(this->getSize());
     T sum = 0;
 
     if (this->isSquare()) {
-      for (uint i = 0; i < this->m; ++i) {
-        sum += this->matrix[i][i];
+      for (uint i = 0; i < m; ++i) {
+        sum += this->_matrix[i][i];
       }
 
       return sum;
@@ -88,7 +99,7 @@ namespace Matrix {
   template <typename T>
   void Matrix<T>::setVal(const uint& i, const uint& j, const T& val) {
     if (isInBounds(i, j)) {
-      this->matrix[i][j] = val;
+      this->_matrix[i][j] = val;
     } else {
       throw std::out_of_range("Matrix index out of range.");
     }
@@ -96,6 +107,8 @@ namespace Matrix {
 
   template <typename T>
   void Matrix<T>::transpose() {
+    const auto [ m, n ] = this->getSize();
+
     for (uint i = 0; i < m; ++i) {
       for (uint j = 0; j < i; ++j) {
         std::swap(this->matrix[i][j], this->matrix[j][i]);
@@ -108,10 +121,11 @@ namespace Matrix {
   template <typename T>
   Matrix<T> Matrix<T>::add(const Matrix<T>& another) const {
     // Determine compatibility
+    const auto [ m, n ] = this->getSize();
     const auto [ M, N ] = another.getSize();
 
-    if (this->m == M && this->m == M) {
-      return Matrix<T>(this->m, this->n, [&](const uint& a, const uint& b) {
+    if (m == M && n == N) {
+      return Matrix<T>(m, n, [&](const uint& a, const uint& b) {
         return this->getVal(a, b) + another.getVal(a, b);
       });
     } else {
@@ -135,7 +149,9 @@ namespace Matrix {
 
   template <typename T>
   Matrix<T> Matrix<T>::scalarMult(const T& scalar) const {
-    return Matrix<T>(this->m, this->n, [&](const uint& a, const uint& b) {
+    const auto [ m, n ] = this->getSize();
+
+    return Matrix<T>(m, n, [&](const uint& a, const uint& b) {
       return scalar * this->getVal(a, b);
     });
   }
@@ -143,12 +159,13 @@ namespace Matrix {
   template <typename T>
   Matrix<T> Matrix<T>::multiply(const Matrix<T>& another) const {
     // Determine compatibility
+    const auto [ m, n ] = this->getSize();
     const auto [ M, N ] = another.getSize();
 
-    if (this->n == M) {
-      auto out = Matrix<T>(this->m, N);
+    if (n == M) {
+      auto out = Matrix<T>(m, N);
 
-      for (uint i = 0; i < this->m; ++i) {
+      for (uint i = 0; i < m; ++i) {
         for (uint j = 0; j < N; ++j) {
           T sum = 0;
 
@@ -168,9 +185,10 @@ namespace Matrix {
 
   template <typename T>
   bool Matrix<T>::isEqualTo(const Matrix<T>& another) const {
+    const auto [ m, n ] = this->getSize();
     const auto [ M, N ] = another.getSize();
 
-    if (this->m == M && this->n == n) {
+    if (m == M && n == n) {
       for (uint i = 0; i < M; i++) {
         for (uint j = 0; j < N; j++) {
           if (this->getVal(i, j) != another.getVal(i, j)) {
@@ -187,7 +205,9 @@ namespace Matrix {
 
   template <typename T>
   bool Matrix<T>::isInBounds(const uint& i, const uint& j) const {
-    return (i >= 0) && (i < this->m) && (j >= 0) && (j < this->n);
+    const auto [ m, n ] = this->getSize();
+
+    return (i >= 0) && (i < m) && (j >= 0) && (j < n);
   }
 };
 

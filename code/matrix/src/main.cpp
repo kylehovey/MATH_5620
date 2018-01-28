@@ -19,11 +19,16 @@ int main() {
       { 6, 7, 8, 9, 0 }
   });
 
+  std::cout << A << std::endl;
+  std::cout << B << std::endl;
+
   auto C = 5 * (A + B) * A;
 
   if (C != A) {
     std::cout << "Not equal!" << std::endl;
   }
+
+  std::cout << A.trace() << std::endl;
 
   auto D = C;
 

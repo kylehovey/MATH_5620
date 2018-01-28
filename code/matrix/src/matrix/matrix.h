@@ -65,6 +65,12 @@ namespace Matrix {
       bool isSquare() const;
 
       /**
+       * Determine whether or not matrix is diagonal
+       * @return True if diagonal
+       */
+      bool isDiagonal() const;
+
+      /**
        * Get the value at the ith row and jth column
        * @param i Row number
        * @param j Column number
@@ -217,10 +223,10 @@ namespace Matrix {
       bool isEqualTo(const Matrix<T>& another) const;
 
       // Size of matrix
-      uint m, n;
+      uint _m, _n;
 
       // Storage for values
-      std::vector<std::vector<T>> matrix;
+      std::vector<std::vector<T>> _matrix;
   };
 };
 
