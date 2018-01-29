@@ -198,10 +198,11 @@ namespace Matrix {
   template <typename T>
   Matrix<T> Matrix<T>::subtract(const Matrix<T>& another) const {
     // Determine compatibility
+    const auto [ m, n ] = this->getSize();
     const auto [ M, N ] = another.getSize();
 
-    if (this->m == M && this->m == M) {
-      return Matrix<T>(this->m, this->n, [&](const uint& a, const uint& b) {
+    if (m == M && n == N) {
+      return Matrix<T>(m, n, [&](const uint& a, const uint& b) {
         return this->getVal(a, b) - another.getVal(a, b);
       });
     } else {
