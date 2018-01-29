@@ -174,6 +174,24 @@ namespace Matrix {
   }
 
   template <typename T>
+  Matrix<T> Matrix<T>::lTriangular() const {
+    const auto [ m, n ] = this->getSize();
+
+    return Matrix<T>(m, n, [&](const uint& a, const uint& b) {
+      return a < b ? this->getVal(a, b) : 0;
+    });
+  }
+
+  template <typename T>
+  Matrix<T> Matrix<T>::uTriangular() const {
+    const auto [ m, n ] = this->getSize();
+
+    return Matrix<T>(m, n, [&](const uint& a, const uint& b) {
+      return a > b ? this->getVal(a, b) : 0;
+    });
+  }
+
+  template <typename T>
   Matrix<T> Matrix<T>::identity(const uint& m) {
     return Matrix<T>::diagonal(std::vector<T>(m, (T) 1));
   }

@@ -90,6 +90,20 @@ namespace Matrix {
       std::vector<T> getDiag() const;
 
       /**
+       * Return a matrix of lower triangular entries
+       * @param data List of values along lower triangular
+       * @return Lower triangular matrix
+       */
+      Matrix<T> lTriangular() const;
+
+      /**
+       * Return a matrix of upper triangular entries
+       * @param data List of values along upper triangular
+       * @return Upper triangular matrix
+       */
+      Matrix<T> uTriangular() const;
+
+      /**
        * Get the trace of this matrix
        * @return The trace
        */
