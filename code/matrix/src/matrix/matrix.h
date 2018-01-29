@@ -106,7 +106,24 @@ namespace Matrix {
        */
       void transpose();
 
+      /* ===== Public Static Methods ===== */
+
+      /**
+       * Create a diagonal matrix from a vector
+       * @param data List of values along diagonal
+       * @return Diagonal matrix
+       */
+      static Matrix<T> diagonal(const std::vector<T>& data);
+
+      /**
+       * Create an identity matrix
+       * @param m Size of identity
+       * @return Identity matrix
+       */
+      static Matrix<T> identity(const uint& m);
+
       /* ===== Operators ===== */
+
       /**
        * Add two matrices
        * @param lhs First matrix to add

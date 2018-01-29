@@ -145,6 +145,24 @@ namespace Matrix {
     }
   }
 
+  /* ===== Public Static Methods ===== */
+
+  template <typename T>
+  Matrix<T> Matrix<T>::diagonal(const std::vector<T>& list) {
+    return Matrix<T>(
+        list.size(),
+        list.size(), 
+        [&](const uint& a, const uint& b) {
+          return (T) (a == b ? list[a] : 0);
+        }
+    );
+  }
+
+  template <typename T>
+  Matrix<T> Matrix<T>::identity(const uint& m) {
+    return Matrix<T>::diagonal(std::vector<T>(m, (T) 1));
+  }
+
   /* ===== Private Methods ===== */
 
   template <typename T>

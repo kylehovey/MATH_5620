@@ -3,13 +3,7 @@
 #include <vector>
 
 int main() {
-  Matrix::Matrix<double> A({
-      { 1, 0, 0, 0, 0 },
-      { 0, 1, 0, 0, 0 },
-      { 0, 0, 1, 0, 0 },
-      { 0, 0, 0, 1, 0 },
-      { 0, 0, 0, 0, 1 }
-  });
+  auto A = Matrix::Matrix<int>::identity(5);
 
   Matrix::Matrix<double> B({
       { 1, 2, 3, 4, 5 },
