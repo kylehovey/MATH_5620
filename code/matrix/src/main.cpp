@@ -5,7 +5,7 @@
 int main() {
   auto A = Matrix::Matrix<int>::identity(5);
 
-  Matrix::Matrix<double> B({
+  Matrix::Matrix<int> B({
       { 1, 2, 3, 4, 5 },
       { 6, 7, 8, 9, 0 },
       { 1, 2, 3, 4, 5 },
@@ -13,6 +13,11 @@ int main() {
       { 6, 7, 8, 9, 0 }
   });
 
+  const auto diag = B.getDiag();
+
+  auto derp = Matrix::Matrix<int>::diagonal(diag);
+
+  std::cout << derp << std::endl;
   std::cout << A.isDiagonal() << std::endl;
   std::cout << B.isDiagDom() << std::endl;
 

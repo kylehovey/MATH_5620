@@ -82,6 +82,14 @@ namespace Matrix {
       T getVal(const uint& i, const uint& j) const;
 
       /**
+       * Get the diagonal as a vector
+       * @param i Row number
+       * @param j Column number
+       * @return Value stored at Matrix[i][j]
+       */
+      std::vector<T> getDiag() const;
+
+      /**
        * Get the trace of this matrix
        * @return The trace
        */

@@ -88,6 +88,21 @@ namespace Matrix {
     return true;
   }
 
+  template <typename T>
+  std::vector<T> Matrix<T>::getDiag() const {
+    if (this->isSquare()) {
+      const auto m = std::get<1>(this->getSize());
+      std::vector<T> out;
+
+      for (uint i = 0; i < m; ++i) {
+        out.push_back(this->getVal(i, i));
+      }
+
+      return out;
+    } else {
+      throw std::out_of_range("Cannot get diagonal of non-square matrix.");
+    }
+  }
 
   template <typename T>
   void Matrix<T>::fillWith(const binaryDual<T>& valMap) {
