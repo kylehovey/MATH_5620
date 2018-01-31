@@ -41,6 +41,95 @@ namespace Matrix {
   /* ===== Public Methods ===== */
 
   template <typename T>
+  void Matrix<T>::swapRows(const uint& fst, const uint& snd) {
+    const auto m = std::get<1>(this->getSize());
+
+    if (fst > 0 && fst < m && snd > 0 && snd < m) {
+      std::swap(this->_matrix[fst], this->_matrix[snd]);
+    } else {
+      throw std::out_of_range("Indices out of range.");
+    }
+  }
+
+  template <typename T>
+  void Matrix<T>::swapCols(const uint& fst, const uint& snd) {
+    const auto [ m, n ] = this->getSize();
+
+    if (fst > 0 && fst < n && snd > 0 && snd < n) {
+      for (uint i = 0; i < m; ++i) {
+        std::swap(this->_matrix[i][fst], this->_matrix[i][snd]);
+      }
+    } else {
+      throw std::out_of_range("Indices out of range.");
+    }
+  }
+
+  template <typename T>
+  template <typename U>
+  void Matrix<T>::multiplyRow(const uint& idx, const U& scalar) {
+    const auto m = std::get<1>(this->getSize());
+
+    if (idx > 0 && idx < m) {
+      std::transform(
+          this->_matrix[idx].begin(),
+          this->_matrix[idx].end(),
+          this->_matrix[idx].begin(),
+          [&](T val) -> T { return val * scalar; }
+      );
+    } else {
+      throw std::out_of_range("Index out of range.");
+    }
+  }
+
+  template <typename T>
+  template <typename U>
+  void Matrix<T>::multiplyCol(const uint& idx, const U& scalar) {
+    const auto [ m , n ] = this->getSize();
+
+    if (idx > 0 && idx < n) {
+      for (uint i = 0; i < m; ++i) {
+        const T val = scalar * this->getVal(i, idx);
+
+        this->setVal(i, idx, val);
+      }
+    } else {
+      throw std::out_of_range("Index out of range.");
+    }
+  }
+
+  template <typename T>
+  template <typename U>
+  void Matrix<T>::addRow(const uint& fst, const uint& snd, const U& scalar) {
+    const auto [ m , n ] = this->getSize();
+
+    if (fst > 0 && fst < m && snd > 0 && snd < m) {
+      for (uint i = 0; i < n; ++i) {
+        const T val = scalar * this->getVal(fst, i) + this->getVal(snd, i);
+
+        this->setVal(snd, i, val);
+      }
+    } else {
+      throw std::out_of_range("Indices out of range.");
+    }
+  }
+
+  template <typename T>
+  template <typename U>
+  void Matrix<T>::addCol(const uint& fst, const uint& snd, const U& scalar) {
+    const auto [ m , n ] = this->getSize();
+
+    if (fst > 0 && fst < n && snd > 0 && snd < n) {
+      for (uint i = 0; i < m; ++i) {
+        const T val = scalar * this->getVal(i, fst) + this->getVal(i, snd);
+
+        this->setVal(i, snd, val);
+      }
+    } else {
+      throw std::out_of_range("Indices out of range.");
+    }
+  }
+
+  template <typename T>
   std::tuple<uint, uint> Matrix<T>::getSize() const {
     return { this->_m, this->_n };
   }

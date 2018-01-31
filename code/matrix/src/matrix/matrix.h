@@ -50,6 +50,54 @@ namespace Matrix {
       Matrix(const Matrix<U>& another);
 
       /**
+       * Swap two rows
+       * @param fst First index to swap
+       * @param snd Second index to swap
+       */
+      void swapRows(const uint& fst, const uint& snd);
+
+      /**
+       * Swap two cols
+       * @param fst First index to swap
+       * @param snd Second index to swap
+       */
+      void swapCols(const uint& fst, const uint& snd);
+
+      /**
+       * Multiply a row by a scalar
+       * @param idx Index of row
+       * @param scalar Scalar to multiply
+       */
+      template <typename U>
+      void multiplyRow(const uint& idx, const U& scalar);
+
+      /**
+       * Multiply a col by a scalar
+       * @param idx Index of col
+       * @param scalar Scalar to multiply
+       */
+      template <typename U>
+      void multiplyCol(const uint& idx, const U& scalar);
+
+      /**
+       * Add one row to another and scale the first one before adding it
+       * @param fst Index of first row
+       * @param snd Index of second row
+       * @param scalar Multiplier value (by first row)
+       */
+      template <typename U>
+      void addRow(const uint& fst, const uint& snd, const U& scalar = 1);
+
+      /**
+       * Add one row to another and scale the first one before adding it
+       * @param fst Index of first col
+       * @param snd Index of second col
+       * @param scalar Multiplier value (by first col)
+       */
+      template <typename U>
+      void addCol(const uint& fst, const uint& snd, const U& scalar = 1);
+
+      /**
        * Get size
        * @return Tuple of the size
        */
