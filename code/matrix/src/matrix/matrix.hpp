@@ -2,6 +2,7 @@
 #define MATRIX_HPP
 
 #include "matrix.h"
+#include <iostream>
 
 namespace Matrix {
   template <typename T>
@@ -44,7 +45,7 @@ namespace Matrix {
   void Matrix<T>::swapRows(const uint& fst, const uint& snd) {
     const auto m = std::get<1>(this->getSize());
 
-    if (fst > 0 && fst < m && snd > 0 && snd < m) {
+    if (fst >= 0 && fst < m && snd >= 0 && snd < m) {
       std::swap(this->_matrix[fst], this->_matrix[snd]);
     } else {
       throw std::out_of_range("Indices out of range.");
@@ -55,7 +56,7 @@ namespace Matrix {
   void Matrix<T>::swapCols(const uint& fst, const uint& snd) {
     const auto [ m, n ] = this->getSize();
 
-    if (fst > 0 && fst < n && snd > 0 && snd < n) {
+    if (fst >= 0 && fst < n && snd >= 0 && snd < n) {
       for (uint i = 0; i < m; ++i) {
         std::swap(this->_matrix[i][fst], this->_matrix[i][snd]);
       }
@@ -69,7 +70,7 @@ namespace Matrix {
   void Matrix<T>::multiplyRow(const uint& idx, const U& scalar) {
     const auto m = std::get<1>(this->getSize());
 
-    if (idx > 0 && idx < m) {
+    if (idx >= 0 && idx < m) {
       std::transform(
           this->_matrix[idx].begin(),
           this->_matrix[idx].end(),
@@ -86,7 +87,7 @@ namespace Matrix {
   void Matrix<T>::multiplyCol(const uint& idx, const U& scalar) {
     const auto [ m , n ] = this->getSize();
 
-    if (idx > 0 && idx < n) {
+    if (idx >= 0 && idx < n) {
       for (uint i = 0; i < m; ++i) {
         const T val = scalar * this->getVal(i, idx);
 
@@ -102,7 +103,7 @@ namespace Matrix {
   void Matrix<T>::addRow(const uint& fst, const uint& snd, const U& scalar) {
     const auto [ m , n ] = this->getSize();
 
-    if (fst > 0 && fst < m && snd > 0 && snd < m) {
+    if (fst >= 0 && fst < m && snd >= 0 && snd < m) {
       for (uint i = 0; i < n; ++i) {
         const T val = scalar * this->getVal(fst, i) + this->getVal(snd, i);
 
@@ -118,7 +119,7 @@ namespace Matrix {
   void Matrix<T>::addCol(const uint& fst, const uint& snd, const U& scalar) {
     const auto [ m , n ] = this->getSize();
 
-    if (fst > 0 && fst < n && snd > 0 && snd < n) {
+    if (fst >= 0 && fst < n && snd >= 0 && snd < n) {
       for (uint i = 0; i < m; ++i) {
         const T val = scalar * this->getVal(i, fst) + this->getVal(i, snd);
 
@@ -194,6 +195,78 @@ namespace Matrix {
   }
 
   template <typename T>
+  Matrix<T> Matrix<T>::lTriangular() const {
+    const auto [ m, n ] = this->getSize();
+
+    return Matrix<T>(m, n, [&](const uint& a, const uint& b) {
+      return a < b ? this->getVal(a, b) : 0;
+    });
+  }
+
+  template <typename T>
+  Matrix<T> Matrix<T>::uTriangular() const {
+    const auto [ m, n ] = this->getSize();
+
+    return Matrix<T>(m, n, [&](const uint& a, const uint& b) {
+      return a > b ? this->getVal(a, b) : 0;
+    });
+  }
+
+  template <typename T>
+  std::tuple<Matrix<T>, Matrix<T>, Matrix<T>> Matrix<T>::LUFactorize() const {
+    if (!this->isSquare()) {
+      throw std::out_of_range("Cannot LU factorize non-square matrix.");
+    }
+
+    // Initialize outputs
+    const auto m = std::get<0>(this->getSize());
+    auto P = Matrix<T>::identity(m);
+    auto L = Matrix<T>::identity(m);
+    auto U = *this;
+
+    // For each column
+    for (uint col = 0; col < m; ++col) {
+      // Find maximum absolute value in rows below row i
+      T max = 0;
+      uint swp = col;
+
+      for (uint row = col; row < m; ++row) {
+        auto val = U.getVal(row, col);
+        auto sqVal = val * val;
+        if (sqVal > max) {
+          max = sqVal;
+          swp = row;
+        }
+      }
+
+      if (swp != col) {
+        // Swap rows with max value to make it a pivot
+        U.swapRows(swp, col);
+        
+        // Store permutation in P matrix
+        P.swapRows(swp, col);
+      } else if (U.getVal(swp, col) == 0) {
+        throw std::domain_error("Matrix is singular. Cannot LU factor.");
+      }
+      
+      // Eliminate all values below pivot
+      const auto diag = U.getVal(col, col);
+
+      for (uint row = col + 1; row < m; ++row) {
+        const auto mult =  - (U.getVal(row, col) / diag);
+
+        // Eliminate value
+        U.addRow(col, row, mult);
+
+        // Add elementary matrix of operation to L
+        L.setVal(row, col, -mult);
+      }
+    }
+    
+    return std::tuple<Matrix<T>, Matrix<T>, Matrix<T>>(P, L, U);
+  }
+
+  template <typename T>
   void Matrix<T>::fillWith(const binaryDual<T>& valMap) {
     const auto [ m , n ] = this->getSize();
 
@@ -244,7 +317,7 @@ namespace Matrix {
 
     for (uint i = 0; i < m; ++i) {
       for (uint j = 0; j < i; ++j) {
-        std::swap(this->matrix[i][j], this->matrix[j][i]);
+        std::swap(this->_matrix[i][j], this->_matrix[j][i]);
       }
     }
   }
@@ -260,24 +333,6 @@ namespace Matrix {
           return (T) (a == b ? list[a] : 0);
         }
     );
-  }
-
-  template <typename T>
-  Matrix<T> Matrix<T>::lTriangular() const {
-    const auto [ m, n ] = this->getSize();
-
-    return Matrix<T>(m, n, [&](const uint& a, const uint& b) {
-      return a < b ? this->getVal(a, b) : 0;
-    });
-  }
-
-  template <typename T>
-  Matrix<T> Matrix<T>::uTriangular() const {
-    const auto [ m, n ] = this->getSize();
-
-    return Matrix<T>(m, n, [&](const uint& a, const uint& b) {
-      return a > b ? this->getVal(a, b) : 0;
-    });
   }
 
   template <typename T>

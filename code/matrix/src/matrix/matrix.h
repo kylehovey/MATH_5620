@@ -152,6 +152,13 @@ namespace Matrix {
       Matrix<T> uTriangular() const;
 
       /**
+       * Generate the LU factorization of this matrix
+       * @return A tuple containing the permutation matrix,
+       *  lower diagonal, and upper diagonal matrix (respectively)
+       */
+      std::tuple<Matrix<T>, Matrix<T>, Matrix<T>> LUFactorize() const;
+
+      /**
        * Get the trace of this matrix
        * @return The trace
        */
