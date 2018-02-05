@@ -12,15 +12,13 @@ int main() {
       { 3, 2, 1, 2 }
   });
 
-  const auto [ P, L, U ] = A.LUFactorize();
+  Mtx _x({{1},{2},{3},{4}});
 
-  const auto res = P * L * U;
+  auto b = A * _x;
 
-  std::cout << A << std::endl;
-  std::cout << P << std::endl;
-  std::cout << L << std::endl;
-  std::cout << U << std::endl;
-  std::cout << res << std::endl;
+  auto x = Mtx::solve(A, b, Matrix::Solve::LU);
+
+  std::cout << x << std::endl;
 
   return EXIT_SUCCESS;
 }

@@ -12,6 +12,14 @@ namespace Matrix {
   template <typename T>
   using binaryDual = std::function<T(const uint&, const uint&)>;
 
+  struct Solve {
+    enum Method {
+      LU,
+      Jacobi,
+      Thompson
+    };
+  };
+
   /* ===== Class Definition ===== */
 
   template <typename T>
@@ -198,6 +206,19 @@ namespace Matrix {
        * @return Identity matrix
        */
       static Matrix<T> identity(const uint& m);
+
+      /**
+       * Solve a linear system
+       * @param A Linear operator being applied in Ax = b
+       * @param b Column vector equal to result
+       * @param method Method to solve system with
+       * @return Column vector with solution to system
+       */
+      static Matrix<T> solve(
+          const Matrix<T>& A,
+          const Matrix<T>& b,
+          const Solve::Method& method = Solve::LU
+      );
 
       /* ===== Operators ===== */
 

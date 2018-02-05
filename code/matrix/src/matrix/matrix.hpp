@@ -340,6 +340,64 @@ namespace Matrix {
     return Matrix<T>::diagonal(std::vector<T>(m, (T) 1));
   }
 
+  template <typename T>
+  Matrix<T> Matrix<T>::solve(
+      const Matrix<T>& A,
+      const Matrix<T>& b,
+      const Solve::Method& method
+  ) {
+    // Get size of matrix
+    const auto m = std::get<0>(A.getSize());
+
+    if (method == Solve::Jacobi) {
+    } else if (method == Solve::Thompson) {
+    } else if (method == Solve::LU) {
+      // Factor A into components
+      auto [ P, L, U ] = A.LUFactorize();
+
+      // Permute result vector
+      P.transpose();
+      auto res = P * b;
+
+      /* ===== Solve Ly = res ===== */
+      Matrix<T> y(m, 1);
+
+      // For each row (top to bottom)
+      for (uint row = 0; row < m; ++row) {
+        // Sum up the equation to the left (already solved)
+        T leftSum = 0;
+
+        for (int col = row - 1; col >= 0; --col) {
+          leftSum += L.getVal(row, col) * y.getVal(col, 0);
+        }
+
+        // Solve for the value at that row
+        y.setVal(row, 0, (res.getVal(row, 0) - leftSum) / L.getVal(row, row));
+      }
+
+      /* ===== Solve Ux = y ===== */
+      Matrix<T> x(m, 1);
+
+      // For each row (bottom to top)
+      for (int row = m - 1; row >= 0; --row) {
+        // Sum up the equation to the right (already solved)
+        T rightSum = 0;
+
+        for (uint col = row + 1; col < m; ++col) {
+          rightSum += U.getVal(row, col) * x.getVal(col, 0);
+        }
+
+        // Solve for the value at that row
+        x.setVal(row, 0, (y.getVal(row, 0) - rightSum) / U.getVal(row, row));
+      }
+
+      return x;
+    }
+
+    // TODO Dummy return
+    return Matrix<T>(m);
+  }
+
   /* ===== Private Methods ===== */
 
   template <typename T>
