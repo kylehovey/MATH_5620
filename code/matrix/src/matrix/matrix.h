@@ -124,6 +124,12 @@ namespace Matrix {
       bool isDiagonal() const;
 
       /**
+       * Determine whether or not matrix is n-diagonal
+       * @return True if diagonal
+       */
+      bool isNDiagonal(const uint& n) const;
+
+      /**
        * Determine whether or not matrix is diagonally dominant
        * @return True if diagonally dominant
        */

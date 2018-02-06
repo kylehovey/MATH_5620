@@ -145,11 +145,25 @@ namespace Matrix {
 
   template <typename T>
   bool Matrix<T>::isDiagonal() const {
-    const auto [ m, n ] = this->getSize();
+    return this->isNDiagonal(1);
+  }
 
-    for (uint i = 0; i < m; ++i) {
-      for (uint j = 0; j < n; ++j) {
-        if (i != j && this->getVal(i, j) != 0) {
+  template <typename T>
+  bool Matrix<T>::isNDiagonal(const uint& n) const {
+    if (!this->isSquare()) {
+      throw std::domain_error("Matrix cannot be diagonal if square");
+    } else if (n % 2 == 0) {
+      throw std::domain_error("N-diagonal must have odd n (symmetric).");
+    }
+
+    const auto m = std::get<0>(this->getSize());
+    const auto base = m - (n - 1) / 2 - 1;
+
+    for (uint col = 0; col < base; ++col) {
+      for (uint height = 0; height < base - col; ++height) {
+        const auto row = m - height - 1;
+
+        if (this->getVal(row, col) != 0 || this->getVal(col, row) != 0) {
           return false;
         }
       }
@@ -367,8 +381,6 @@ namespace Matrix {
           return 0;
         }
       });
-
-      std::cout << invD << std::endl;
 
       auto R = A.lTriangular() + A.uTriangular();
 
