@@ -3,6 +3,7 @@
 
 #include "matrix.h"
 #include <iostream>
+#include <math.h>
 
 namespace Matrix {
   template <typename T>
@@ -166,11 +167,11 @@ namespace Matrix {
 
       for (uint j = 0; j < n; ++j) {
         if (i != j) {
-          sum += this->getVal(i, j);
+          sum += pow(this->getVal(i, j), 2);
         }
       }
       
-      if (this->getVal(i, i) < sum) {
+      if (pow(this->getVal(i, i), 2) < sum) {
         return false;
       }
     }
@@ -346,10 +347,38 @@ namespace Matrix {
       const Matrix<T>& b,
       const Solve::Method& method
   ) {
+    // Only work for square matrices
+    if (!A.isSquare()) {
+      throw std::domain_error("Input matrix must be square.");
+    }
+
     // Get size of matrix
     const auto m = std::get<0>(A.getSize());
 
     if (method == Solve::Jacobi) {
+      if (!A.isDiagDom()) {
+        throw std::domain_error("Input matrix is not diagonally dominant.");
+      }
+
+      Matrix<T> invD(m, m, [&](const uint& a, const uint& b) -> T {
+        if (a == b && A.getVal(a, b) != 0) {
+          return 1.0 / A.getVal(a, b);
+        } else {
+          return 0;
+        }
+      });
+
+      std::cout << invD << std::endl;
+
+      auto R = A.lTriangular() + A.uTriangular();
+
+      auto x = b;
+
+      for (unsigned int i = 0; i < 500; ++i) {
+        x = invD * (b - R * x);
+      }
+
+      return x;
     } else if (method == Solve::Thompson) {
     } else if (method == Solve::LU) {
       // Factor A into components
