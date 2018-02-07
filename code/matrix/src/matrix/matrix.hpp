@@ -489,7 +489,6 @@ namespace Matrix {
       return x;
     }
 
-    // TODO Dummy return
     return Matrix<T>(m);
   }
 
