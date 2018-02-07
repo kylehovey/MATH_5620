@@ -419,21 +419,17 @@ namespace Matrix {
       auto _b = diags[1];
       auto _c = diags[2];
 
-      // First pass, modify c coefficients
-      _c[0] = _c[0] / _b[0];
-      for (uint i = 1; i < m; ++i) {
-        _c[i] = _c[i] / (_b[i] - _a[i] * _c[i - 1]);
-      }
-
-      // Second pass, use solution vector
+      // Copy solution vector
       auto _d = std::vector<T>();
       for (uint i = 0; i < m; ++i) {
         _d.push_back(b.getVal(i, 0));
       }
 
-      // Run through solution vector
+      // Do elimination via algebra
+      _c[0] = _c[0] / _b[0];
       _d[0] = _d[0] / _b[0];
       for (uint i = 1; i < m; ++i) {
+        _c[i] = _c[i] / (_b[i] - _a[i] * _c[i - 1]);
         _d[i] = (_d[i] - _a[i] * _d[i - 1]) / (_b[i] - _a[i] * _c[i - 1]);
       }
 
