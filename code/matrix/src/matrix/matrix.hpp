@@ -3,7 +3,8 @@
 
 #include "matrix.h"
 #include <iostream>
-#include <math.h>
+#include <cmath>
+#include <limits>
 
 namespace Matrix {
   template <typename T>
@@ -490,6 +491,34 @@ namespace Matrix {
     }
 
     return Matrix<T>(m);
+  }
+
+  template <typename T>
+  T Matrix<T>::vNorm(const Matrix<T>& v, const uint& n) {
+    const auto [ M, N ] = v.getSize();
+    if (M != 1 && N != 1 && M != N) {
+      throw std::domain_error("Need a row or column vector for vector norm.");
+    }
+
+    const auto isRow = (M == 1);
+    const auto size = isRow ? N : M;
+
+    T sum = 0;
+    T max = std::numeric_limits<T>::min();
+
+    for (uint i = 0; i < size; ++i) {
+      const auto val = isRow ? v.getVal(0, i) : v.getVal(i, 0);
+
+      max = (val > max) ? val : max;
+      sum += pow(std::abs(val), n);
+    }
+
+    if (n == std::numeric_limits<uint>::max()) {
+      // Infinity norm
+      return max;
+    } else {
+      return pow(sum, 1.0 / n);
+    }
   }
 
   /* ===== Private Methods ===== */

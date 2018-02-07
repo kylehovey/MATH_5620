@@ -226,6 +226,13 @@ namespace Matrix {
           const Solve::Method& method = Solve::LU
       );
 
+      /**
+       * Find the norm of a vector (row or column)
+       * @param vect v column or row matrix
+       * @param n The order of the norm
+       */
+      static T vNorm(const Matrix<T>& v, const uint& n = 2);
+
       /* ===== Operators ===== */
 
       /**
