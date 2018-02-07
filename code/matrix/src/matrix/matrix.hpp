@@ -392,6 +392,60 @@ namespace Matrix {
 
       return x;
     } else if (method == Solve::Thompson) {
+      if (!A.isNDiagonal(3)) {
+        throw std::domain_error("Thompson method needs tri-diagonal matrix.");
+      }
+
+      // Throw diagonals into vectors (store in a vector of diags)
+      std::vector<std::vector<T>> diags(3, std::vector<T>());
+
+      diags[0].push_back(0);
+
+      for (uint row = 0; row < m; ++row) {
+        for (uint nDiag = 0; nDiag < 3; ++nDiag) {
+          const auto pos = row - 1 + nDiag;
+
+          if (pos < m) {
+            diags[nDiag].push_back(A.getVal(row, (uint) pos));
+          }
+        }
+      }
+
+      diags[2].push_back(0);
+
+      // Syntactic nicety
+      auto _a = diags[0];
+      auto _b = diags[1];
+      auto _c = diags[2];
+
+      // First pass, modify c coefficients
+      _c[0] = _c[0] / _b[0];
+      for (uint i = 1; i < m; ++i) {
+        _c[i] = _c[i] / (_b[i] - _a[i] * _c[i - 1]);
+      }
+
+      // Second pass, use solution vector
+      auto _d = std::vector<T>();
+      for (uint i = 0; i < m; ++i) {
+        _d.push_back(b.getVal(i, 0));
+      }
+
+      // Run through solution vector
+      _d[0] = _d[0] / _b[0];
+      for (uint i = 1; i < m; ++i) {
+        _d[i] = (_d[i] - _a[i] * _d[i - 1]) / (_b[i] - _a[i] * _c[i - 1]);
+      }
+
+      // Create the solution
+      Matrix<T> x(m, 1);
+      x.setVal(m - 1, 0, _d[m - 1]);
+      for (int i = m - 2; i >= 0; --i) {
+        const uint _i = i;
+
+        x.setVal(_i, 0, _d[_i] - _c[_i] * x.getVal(_i + 1, 0));
+      }
+
+      return x;
     } else if (method == Solve::LU) {
       // Factor A into components
       auto [ P, L, U ] = A.LUFactorize();
