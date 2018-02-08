@@ -1,7 +1,7 @@
 ---
 math: true
-permalink: /thomas
-title: Thomas Algorithm, Elliptic ODE, and Error Vector Norm
+permalink: /matrix
+title: C++ Matrix Library
 layout: page
 ---
 
