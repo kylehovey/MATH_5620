@@ -53,9 +53,6 @@ int main() {
     return std::sin(M_PI * x);
   };
 
-  // 2nd derivative over a mesh of size 10
-  const auto D = Mtx::genFDMatrix(meshSize, 2);
-
   // Generate exact solution vector
   std::function<double(double)> exact = [](double x) {
     return 2.5 * x + 2.5 - std::sin(M_PI * x) / (M_PI * M_PI);
@@ -79,8 +76,14 @@ int main() {
   const auto E = soln - uExact;
   std::cout << E << std::endl;
 
+  std::cout << "1-norm of error vector\n";
+  std::cout << Matrix::Matrix<double>::vNorm(E, 1) << std::endl;
+
   std::cout << "2-norm of error vector\n";
   std::cout << Matrix::Matrix<double>::vNorm(E, 2) << std::endl;
+
+  std::cout << "infinity-norm of error vector\n";
+  std::cout << Matrix::Matrix<double>::vNorm(E, std::numeric_limits<uint>::max()) << std::endl;
 
   return EXIT_SUCCESS;
 }
@@ -125,8 +128,12 @@ Error vector
 0.0392225
 0.0195986
 
+1-norm of error vector
+1.08687
 2-norm of error vector
 0.388285
+infinity-norm of error vector
+0.198574
 {% endhighlight %}
 
 **Implementation/Code:**
