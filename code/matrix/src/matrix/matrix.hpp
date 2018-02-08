@@ -559,6 +559,26 @@ namespace Matrix {
     return coeffs;
   }
 
+  template <typename T>
+  Matrix<T> Matrix<T>::genFDMatrix(
+      const uint& size,
+      const uint& order,
+      const uint& accuracy
+  ) {
+    const auto coeffs = Matrix<T>::genFDCoeff(order, accuracy);
+
+    return Matrix<T>(size, size, [&](const uint& row, const uint& col) -> T {
+        const int start = row - 1;
+        const int end = start + coeffs.size() - 1;
+
+        if ((int) col >= start && (int) col <= end) {
+          return coeffs[(int) col - row + 1];
+        } else {
+          return 0;
+        }
+    });
+  }
+
   /* ===== Private Methods ===== */
 
   template <typename T>

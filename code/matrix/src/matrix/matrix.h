@@ -243,6 +243,20 @@ namespace Matrix {
           const uint& accuracy
       );
 
+      /**
+       * Generate a matrix approximation to a differential
+       *  operator with a given order and accuracy over
+       *  a mesh
+       * @param meshSize Size of mesh being computed over
+       * @param order Order of derivative
+       * @param accuracy Order of accuracy
+       */
+      static Matrix<T> genFDMatrix(
+          const uint& size,
+          const uint& order,
+          const uint& accuracy = 2
+      );
+
       /* ===== Operators ===== */
 
       /**

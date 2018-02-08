@@ -5,7 +5,8 @@
 using Mtx = Matrix::Matrix<double>;
 
 int main() {
-  std::cout << "1st derivative (m = 1) with order 4 accuracy (n = 4)\n";
+  std::cout << "2nd derivative (m = 2) with order 2 accuracy (n = 2)\n";
+
   const auto coeffs = Mtx::genFDCoeff(2, 2);
 
   for (auto i = 0u; i < coeffs.size(); ++i) {
