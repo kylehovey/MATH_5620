@@ -59,7 +59,7 @@ int main() {
   };
 
   // K matrix
-  const Mtx k(meshSize, 1, [](const uint& a, const uint& b) {
+  const Mtx k(meshSize - 1, 1, [](const uint& a, const uint& b) {
       (void) a;
       (void) b;
       return rand() % 40 + 10;
@@ -78,16 +78,15 @@ Output:
 
 {% highlight C++ %}
 Solved solution
-0.0930543
-0.137959
-0.309881
-0.110212
-0.0800451
-0.149885
-0.142224
-0.201282
-0.106659
-0.296143
+0.0590963
+0.0948372
+0.0659865
+0.141785
+0.182392
+0.134581
+0.208368
+0.134544
+0.134812
 {% endhighlight %}
 
 **Implementation/Code:**
@@ -121,18 +120,18 @@ Matrix::Matrix<T> solveEllipticWithK(
 
   // Generate F vector
   const T h = (b - a) / (T) n;
-  const Matrix::Matrix<T> F(n, 1, [&](const uint& i, const uint& j) -> T {
+  const Matrix::Matrix<T> F(n - 1, 1, [&](const uint& i, const uint& j) -> T {
       (void) j;
-      return std::pow(h, 2) * f(a + i * h);
+      return std::pow(h, 2) * f(a + (i + 1) * h);
   });
 
   // Use initial conditions
-  Matrix::Matrix<T> init(n, 1);
+  Matrix::Matrix<T> init(n - 1, 1);
   init.setVal(0, 0, ua);
-  init.setVal(n - 1, 0, ub);
+  init.setVal(n - 2, 0, ub);
 
   // Generate differential operator for second derivative
-  auto D = Matrix::Matrix<T>::genFDMatrix(n, 2);
+  auto D = Matrix::Matrix<T>::genFDMatrix(n - 1, 2);
 
   // Modify it so that it includes the derivative for k(x)
   D.fillWith([&](const uint& a, const uint& b) -> T {
