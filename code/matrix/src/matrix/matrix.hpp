@@ -7,6 +7,21 @@
 #include <limits>
 
 namespace Matrix {
+  /* ===== Utility Functions ===== */
+  /**
+   * Compute the factorial of a number
+   * @param n The number to compute the factorial of
+   * @return The factorial
+   */
+  template <typename T>
+  int factorial(uint n) {
+    T out = 1;
+
+    for(; n > 1; out *= n--);
+
+    return out;
+  }
+
   template <typename T>
   Matrix<T>::Matrix(
       const uint& m,
@@ -515,6 +530,33 @@ namespace Matrix {
     } else {
       return pow(sum, 1.0 / n);
     }
+  }
+
+  template <typename T>
+  std::vector<T> Matrix<T>::genFDCoeff(const uint& order, const uint& accuracy) {
+    // Determine the amount of coefficients needed
+    auto size = 2 * std::floor((order + 1) / 2) - 1 + accuracy;
+
+    // Determine max absolute index count
+    const auto p = (size - 1) / 2;
+
+    // Initialize the taylor system matrix
+    const auto A = Matrix<T>(size, size, [&](const uint& a, const uint& b) {
+        // Return taylor coefficient at this value
+        return std::pow((-p + b), a);
+    });
+
+    // Initialize result vector
+    Matrix<T> b(size, 1);
+    b.setVal(order, 0, factorial<uint>(order));
+
+    const auto x = Matrix<T>::solve(A, b);
+    std::vector<T> coeffs;
+    for (uint i = 0; i < size; ++i) {
+      coeffs.push_back(x.getVal(i, 0));
+    }
+
+    return coeffs;
   }
 
   /* ===== Private Methods ===== */

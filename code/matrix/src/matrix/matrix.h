@@ -233,6 +233,16 @@ namespace Matrix {
        */
       static T vNorm(const Matrix<T>& v, const uint& n = 2);
 
+      /**
+       * Generate a vector of finite difference coefficients
+       * @param order Order of derivative
+       * @param accuracy Order of accuracy
+       */
+      static std::vector<T> genFDCoeff(
+          const uint& order,
+          const uint& accuracy
+      );
+
       /* ===== Operators ===== */
 
       /**
