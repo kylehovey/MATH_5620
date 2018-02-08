@@ -15,4 +15,4 @@ layout: default
   2. [Thomas Algorithm to solve Elliptic ODE (With Error Norm)](./thomas)
   3. [LU Factorization](./lu)
   4. [Jacobi Iteration](./jacobi)
-  5. [Elliptic ODE (non-simplified version)](./ellipticFDM)
+  5. [Elliptic ODE (non-simplified version)](./ellipticWithK)
