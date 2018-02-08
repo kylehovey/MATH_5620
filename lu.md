@@ -79,7 +79,6 @@ Matrix<T> Matrix<T>::solve(
   auto [ P, L, U ] = A.LUFactorize();
 
   // Permute result vector
-  P.transpose();
   auto res = P * b;
 
   /* ===== Solve Ly = res ===== */

@@ -262,10 +262,9 @@ namespace Matrix {
       uint swp = col;
 
       for (uint row = col; row < m; ++row) {
-        auto val = U.getVal(row, col);
-        auto sqVal = val * val;
-        if (sqVal > max) {
-          max = sqVal;
+        auto val = std::abs(U.getVal(row, col));
+        if (val > max) {
+          max = val;
           swp = row;
         }
       }
@@ -463,7 +462,6 @@ namespace Matrix {
       auto [ P, L, U ] = A.LUFactorize();
 
       // Permute result vector
-      P.transpose();
       auto res = P * b;
 
       /* ===== Solve Ly = res ===== */
