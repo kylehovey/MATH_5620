@@ -130,7 +130,7 @@ Error vector
 2-norm of error vector
 0.00187262
 infinity-norm of error vector
-2.22507e-30874
+-0.00025879
 {% endhighlight %}
 
 **Implementation/Code:**

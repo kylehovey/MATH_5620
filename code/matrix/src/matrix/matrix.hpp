@@ -515,7 +515,7 @@ namespace Matrix {
     const auto size = isRow ? N : M;
 
     T sum = 0;
-    T max = std::numeric_limits<T>::min();
+    T max = -std::numeric_limits<T>::max();
 
     for (uint i = 0; i < size; ++i) {
       const auto val = isRow ? v.getVal(0, i) : v.getVal(i, 0);
