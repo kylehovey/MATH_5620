@@ -59,9 +59,9 @@ int main() {
   };
 
   const double h = (b - a) / (double) meshSize;
-  Mtx uExact(meshSize, 1, [&](const uint& i, const uint& j) {
+  Mtx uExact(meshSize - 1, 1, [&](const uint& i, const uint& j) {
       (void) j;
-      return exact(a + i * h);
+      return exact(a + (i + 1) * h);
   });
 
   const auto soln = solveElliptic<double>(a, b, ua, ub, f, meshSize);
@@ -93,19 +93,17 @@ Output:
 
 {% highlight C++ %}
 Solved solution
-2.69857
-2.89715
-3.09881
-3.30635
-3.52199
-3.74713
-3.98227
-4.22692
-4.47967
-4.73829
+2.71843
+2.93995
+3.16735
+3.40284
+3.64784
+3.90284
+4.16735
+4.43995
+4.71843
 
 Exact solution
-2.5
 2.71869
 2.94044
 3.16803
@@ -117,23 +115,22 @@ Exact solution
 4.71869
 
 Error vector
-0.198574
-0.178458
-0.158367
-0.138324
-0.118348
-0.0984495
-0.0786331
-0.0588946
-0.0392225
-0.0195986
+-0.00025879
+-0.000492248
+-0.000677521
+-0.000796474
+-0.000837462
+-0.000796474
+-0.000677521
+-0.000492248
+-0.00025879
 
 1-norm of error vector
-1.08687
+0.00528753
 2-norm of error vector
-0.388285
+0.00187262
 infinity-norm of error vector
-0.198574
+2.22507e-30874
 {% endhighlight %}
 
 **Implementation/Code:**
@@ -147,8 +144,6 @@ To handle boundary conditions, I subtract them off at the boundaries (as seen in
 Following is the code required to complete these goals:
 
 {% highlight c++ %}
-#include "../../matrix/src/matrix/matrix.h"
-
 /**
  * Solve u'' = f given boundary conditions
  * @param a Left boundary
@@ -173,24 +168,24 @@ Matrix::Matrix<T> solveElliptic(
 
   // Generate F vector
   const T h = (b - a) / (T) n;
-  const Matrix::Matrix<T> F(n, 1, [&](const uint& i, const uint& j) -> T {
+  const Matrix::Matrix<T> F(n - 1, 1, [&](const uint& i, const uint& j) -> T {
       (void) j;
-      return std::pow(h, 2) * f(a + i * h);
+      return std::pow(h, 2) * f(a + (i + 1) * h);
   });
 
   // Use initial conditions
-  Matrix::Matrix<T> init(n, 1);
+  Matrix::Matrix<T> init(n - 1, 1);
   init.setVal(0, 0, ua);
-  init.setVal(n - 1, 0, ub);
+  init.setVal(n - 2, 0, ub);
 
   // Generate differential operator for second derivative
-  const auto D = Matrix::Matrix<T>::genFDMatrix(n, 2);
+  const auto D = Matrix::Matrix<T>::genFDMatrix(n - 1, 2);
 
   // Solve for solution vector
   const auto soln = Matrix::Matrix<T>::solve(
       D,
       F - init,
-      Matrix::Solve::Thomas
+      Matrix::Solve::Thompson
    );
 
   return soln;

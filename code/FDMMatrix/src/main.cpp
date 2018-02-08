@@ -29,18 +29,18 @@ Matrix::Matrix<T> solveElliptic(
 
   // Generate F vector
   const T h = (b - a) / (T) n;
-  const Matrix::Matrix<T> F(n, 1, [&](const uint& i, const uint& j) -> T {
+  const Matrix::Matrix<T> F(n - 1, 1, [&](const uint& i, const uint& j) -> T {
       (void) j;
-      return std::pow(h, 2) * f(a + i * h);
+      return std::pow(h, 2) * f(a + (i + 1) * h);
   });
 
   // Use initial conditions
-  Matrix::Matrix<T> init(n, 1);
+  Matrix::Matrix<T> init(n - 1, 1);
   init.setVal(0, 0, ua);
-  init.setVal(n - 1, 0, ub);
+  init.setVal(n - 2, 0, ub);
 
   // Generate differential operator for second derivative
-  const auto D = Matrix::Matrix<T>::genFDMatrix(n, 2);
+  const auto D = Matrix::Matrix<T>::genFDMatrix(n - 1, 2);
 
   // Solve for solution vector
   const auto soln = Matrix::Matrix<T>::solve(
@@ -75,9 +75,9 @@ int main() {
   };
 
   const double h = (b - a) / (double) meshSize;
-  Mtx uExact(meshSize, 1, [&](const uint& i, const uint& j) {
+  Mtx uExact(meshSize - 1, 1, [&](const uint& i, const uint& j) {
       (void) j;
-      return exact(a + i * h);
+      return exact(a + (i + 1) * h);
   });
 
   const auto soln = solveElliptic<double>(a, b, ua, ub, f, meshSize);
