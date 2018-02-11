@@ -69,9 +69,9 @@ Jacobi iteration is the continued iteration of:
 
 # \\[ x_{k+1} = D^{-1} (b - Rx_k) \\]
 
-Where \\( D \\) is the diagonal of \\( A \\), \\( R \\) is \\( A \\) without the diagonal. Luckily, the inverse of a diagonal matrix can be found in \\( O(n) \\) by inverting every element in the diagonal (or just do nothing if the element is \\( 0 \\) ). Since matrix multiplication takes \\( O(n^3) \\) operations, this algorithm runs in
+Where \\( D \\) is the diagonal of \\( A \\), \\( R \\) is \\( A \\) without the diagonal. Luckily, the inverse of a diagonal matrix can be found in \\( O(n) \\) by inverting every element in the diagonal (or just do nothing if the element is \\( 0 \\) ). Since matrix multiplication of a column vector takes \\( O(n^2) \\) operations, this algorithm runs in
 
-# \\[ O(n^3) \\]
+# \\[ O(n^2) \\]
 
 {% highlight c++ %}
 template <typename T>
