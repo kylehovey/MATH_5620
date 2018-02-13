@@ -531,6 +531,42 @@ namespace Matrix {
   }
 
   template <typename T>
+  T Matrix<T>::mNorm(const Matrix<T>& A, const uint& n) {
+    const auto [ M, N ] = A.getSize();
+    T max = -std::numeric_limits<uint>::max();
+
+    if (n == std::numeric_limits<uint>::max()) {
+      // Max row-sum
+      for (uint row = 0; row < M; ++row) {
+        T sum = 0;
+
+        for (uint col = 0; col < N; ++col) {
+          sum += A.getVal(row, col);
+        }
+
+        max = sum > max ? sum : max;
+      }
+
+      return max;
+    } else if (n == 1) {
+      // Max col-sum
+      for (uint col = 0; col < N; ++col) {
+        T sum = 0;
+
+        for (uint row = 0; row < N; ++row) {
+          sum += A.getVal(row, col);
+        }
+
+        max = sum > max ? sum : max;
+      }
+
+      return max;
+    } else {
+      throw std::domain_error("Matrix norm order not implemented.");
+    }
+  }
+
+  template <typename T>
   std::vector<T> Matrix<T>::genFDCoeff(const uint& order, const uint& accuracy) {
     // Determine the amount of coefficients needed
     auto size = 2 * std::floor((order + 1) / 2) - 1 + accuracy;

@@ -228,10 +228,17 @@ namespace Matrix {
 
       /**
        * Find the norm of a vector (row or column)
-       * @param vect v column or row matrix
+       * @param v Column or row matrix
        * @param n The order of the norm
        */
       static T vNorm(const Matrix<T>& v, const uint& n = 2);
+
+      /**
+       * Find the norm of a matrix
+       * @param A Matrix to compute the norm of
+       * @param n The order of the norm
+       */
+      static T mNorm(const Matrix<T>& A, const uint& n = 2);
 
       /**
        * Generate a vector of finite difference coefficients
