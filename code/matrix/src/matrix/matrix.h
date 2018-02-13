@@ -214,6 +214,13 @@ namespace Matrix {
       static Matrix<T> identity(const uint& m);
 
       /**
+       * Create a Hilbert Matrix
+       * @param m Size of matrix
+       * @return Hilbert matrix of size m
+       */
+      static Matrix<T> hilbert(const uint& m);
+
+      /**
        * Solve a linear system
        * @param A Linear operator being applied in Ax = b
        * @param b Column vector equal to result

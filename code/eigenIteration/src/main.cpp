@@ -5,14 +5,9 @@
 using Mtx = Matrix::Matrix<double>;
 
 int main() {
-  Mtx A({
-      { -2, 1, 0, 0 },
-      { 1, -2, 1, 0 },
-      { 0, 1, -2, 1 },
-      { 0, 0, 1, -2 }
-  });
+  auto A = Mtx::hilbert(5);
 
-  Mtx x({{1},{2},{3},{4}});
+  Mtx x({{1},{1},{1},{1},{1}});
 
   for (auto i = 0u; i < 100; ++i) {
     auto b = A * x;

@@ -371,6 +371,13 @@ namespace Matrix {
   }
 
   template <typename T>
+  Matrix<T> Matrix<T>::hilbert(const uint& m) {
+    return Matrix<T>(m, m, [&] (const uint& i, const uint& j) {
+        return 1.0 / ((T) i + (T) j + 1.0);
+    });
+  }
+
+  template <typename T>
   Matrix<T> Matrix<T>::solve(
       const Matrix<T>& A,
       const Matrix<T>& b,
