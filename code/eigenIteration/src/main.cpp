@@ -9,7 +9,7 @@ int main() {
 
   const auto [ bigEigen, x ] = A.largestEigenpair();
   const auto [ smolEigen, y ] = A.smallestEigenpair();
-  const auto condition = A.conditionNumber();
+  const auto condition = A.conditionNumber(1000);
 
   std::cout << "A\n";
   std::cout << A << std::endl;
