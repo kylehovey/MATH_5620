@@ -324,26 +324,20 @@ namespace Matrix {
     const auto M = std::get<0>(this->getSize());
 
     // Starting value
-    Matrix<T> x(M, 1, [](const uint& i, const uint& j) {
+    Matrix<T> b(M, 1, [](const uint& i, const uint& j) {
         (void) i;
         (void) j;
         return 1;
     });
 
-    // Identity
-    Matrix<T> I = Matrix<T>::identity(M);
-
-    // Iterator matrix
-    const auto A = *this - I;
-
     for (uint i = 0; i < nIter; ++i) {
-      auto b = Matrix<T>::solve(A, x);
-      T mult = 1.0 / Matrix<T>::vNorm(b, 2);
-      x = mult * b;
+      auto x = Matrix<T>::solve(*this, b);
+      T mult = 1.0 / Matrix<T>::vNorm(x, 2);
+      b = x * mult;
     }
 
-    auto axe = *this * x;
-    auto eigenVal = axe.getVal(0, 0) / x.getVal(0, 0);
+    auto axe = *this * b;
+    auto eigenVal = Matrix<T>::vNorm(axe, 2) / Matrix<T>::vNorm(b, 2);
 
     return std::tie(eigenVal, axe);
   }
