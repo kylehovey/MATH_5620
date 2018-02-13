@@ -5,7 +5,7 @@
 using Mtx = Matrix::Matrix<double>;
 
 int main() {
-  auto A = Mtx::hilbert(5);
+  auto A = Mtx::hilbert(50);
 
   const auto [ eigenVal, x ] = A.largestEigenpair();
 
