@@ -7,21 +7,12 @@ using Mtx = Matrix::Matrix<double>;
 int main() {
   auto A = Mtx::hilbert(5);
 
-  Mtx x({{1},{1},{1},{1},{1}});
-
-  for (auto i = 0u; i < 100; ++i) {
-    auto b = A * x;
-    double mult = 1.0 / Mtx::vNorm(b, 2);
-    x = mult * b;
-  }
+  const auto [ eigenVal, x ] = A.largestEigenpair();
 
   std::cout << "A\n";
   std::cout << A << std::endl;
   std::cout << "x vector\n";
   std::cout << x << std::endl;
-
-  auto axe = A * x;
-  auto eigenVal = axe.getVal(0, 0) / x.getVal(0, 0);
 
   std::cout << "Eigenvalue\n";
   std::cout << eigenVal << std::endl;

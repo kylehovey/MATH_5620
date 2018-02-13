@@ -297,6 +297,29 @@ namespace Matrix {
   }
 
   template <typename T>
+  std::tuple<T, Matrix<T>> Matrix<T>::largestEigenpair(const uint& nIter) {
+    const auto M = std::get<0>(this->getSize());
+
+    // Starting value
+    Matrix<T> x(M, 1, [](const uint& i, const uint& j) {
+        (void) i;
+        (void) j;
+        return 1;
+    });
+
+    for (uint i = 0; i < nIter; ++i) {
+      auto b = *this * x;
+      T mult = 1.0 / Matrix<T>::vNorm(b, 2);
+      x = mult * b;
+    }
+
+    auto axe = *this * x;
+    auto eigenVal = axe.getVal(0, 0) / x.getVal(0, 0);
+
+    return std::tie(eigenVal, axe);
+  }
+
+  template <typename T>
   void Matrix<T>::fillWith(const binaryDual<T>& valMap) {
     const auto [ m , n ] = this->getSize();
 

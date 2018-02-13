@@ -173,6 +173,13 @@ namespace Matrix {
       std::tuple<Matrix<T>, Matrix<T>, Matrix<T>> LUFactorize() const;
 
       /**
+       * Find the largest eigenvalue for this matrix, and its eigenvector
+       * @param nIter Number of iterations to use in power iteration
+       * @return A tuple containing the eigenvalue, eigenvector pair
+       */
+      std::tuple<T, Matrix<T>> largestEigenpair(const uint& nIter = 100);
+
+      /**
        * Get the trace of this matrix
        * @return The trace
        */
