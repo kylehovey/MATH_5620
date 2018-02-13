@@ -5,22 +5,30 @@
 using Mtx = Matrix::Matrix<double>;
 
 int main() {
-  auto A = Mtx::hilbert(50);
+  auto A = Mtx::hilbert(5);
 
-  const auto [ eigenVal, x ] = A.largestEigenpair();
+  const auto [ bigEigen, x ] = A.largestEigenpair();
+  const auto [ smolEigen, y ] = A.smallestEigenpair();
 
   std::cout << "A\n";
   std::cout << A << std::endl;
   std::cout << "x vector\n";
   std::cout << x << std::endl;
 
-  std::cout << "Eigenvalue\n";
-  std::cout << eigenVal << std::endl;
+  std::cout << "Largest Eigenvalue\n";
+  std::cout << bigEigen << std::endl;
   std::cout << std::endl;
   std::cout << "A * x\n";
   std::cout << A * x << std::endl;
-  std::cout << "Eigenvalue * x\n";
-  std::cout << eigenVal * x << std::endl;
+  std::cout << "Largest Eigenvalue * x\n";
+  std::cout << bigEigen * x << std::endl;
+  std::cout << "Smallest Eigenvalue\n";
+  std::cout << smolEigen << std::endl;
+  std::cout << std::endl;
+  std::cout << "A * y\n";
+  std::cout << A * y << std::endl;
+  std::cout << "Smallest Eigenvalue * x\n";
+  std::cout << smolEigen * x << std::endl;
 
   return EXIT_SUCCESS;
 }
