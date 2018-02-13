@@ -14,6 +14,8 @@ int main() {
   std::cout << A << std::endl;
   std::cout << "x vector\n";
   std::cout << x << std::endl;
+  std::cout << "y vector\n";
+  std::cout << y << std::endl;
 
   std::cout << "Largest Eigenvalue\n";
   std::cout << bigEigen << std::endl;
@@ -27,8 +29,8 @@ int main() {
   std::cout << std::endl;
   std::cout << "A * y\n";
   std::cout << A * y << std::endl;
-  std::cout << "Smallest Eigenvalue * x\n";
-  std::cout << smolEigen * x << std::endl;
+  std::cout << "Smallest Eigenvalue * y\n";
+  std::cout << smolEigen * y << std::endl;
 
   return EXIT_SUCCESS;
 }

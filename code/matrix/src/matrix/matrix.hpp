@@ -330,8 +330,14 @@ namespace Matrix {
         return 1;
     });
 
+    // Identity
+    Matrix<T> I = Matrix<T>::identity(M);
+
+    // Iterator matrix
+    const auto A = *this - I;
+
     for (uint i = 0; i < nIter; ++i) {
-      auto b = Matrix<T>::solve(*this, x);
+      auto b = Matrix<T>::solve(A, x);
       T mult = 1.0 / Matrix<T>::vNorm(b, 2);
       x = mult * b;
     }
