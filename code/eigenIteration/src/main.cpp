@@ -9,6 +9,7 @@ int main() {
 
   const auto [ bigEigen, x ] = A.largestEigenpair();
   const auto [ smolEigen, y ] = A.smallestEigenpair();
+  const auto condition = A.conditionNumber();
 
   std::cout << "A\n";
   std::cout << A << std::endl;
@@ -16,6 +17,8 @@ int main() {
   std::cout << x << std::endl;
   std::cout << "y vector\n";
   std::cout << y << std::endl;
+  std::cout << "Condition Number of A:" << std::endl;
+  std::cout << condition << std::endl;
 
   std::cout << "Largest Eigenvalue\n";
   std::cout << bigEigen << std::endl;

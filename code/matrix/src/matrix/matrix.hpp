@@ -349,6 +349,14 @@ namespace Matrix {
   }
 
   template <typename T>
+  T Matrix<T>::conditionNumber(const uint& nIter) {
+    const auto bigEigen = std::get<0>(this->largestEigenpair(nIter));
+    const auto smolEigen = std::get<0>(this->smallestEigenpair(nIter));
+
+    return bigEigen * smolEigen;
+  }
+
+  template <typename T>
   void Matrix<T>::fillWith(const binaryDual<T>& valMap) {
     const auto [ m , n ] = this->getSize();
 

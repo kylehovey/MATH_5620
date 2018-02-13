@@ -187,6 +187,13 @@ namespace Matrix {
       std::tuple<T, Matrix<T>> smallestEigenpair(const uint& nIter = 100);
 
       /**
+       * Find the condition number of this matrix
+       * @param nIter Number of iterations to use in power iteration
+       * @return The condition number
+       */
+      T conditionNumber(const uint& nIter = 100);
+
+      /**
        * Get the trace of this matrix
        * @return The trace
        */
