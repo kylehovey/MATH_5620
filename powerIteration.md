@@ -89,6 +89,64 @@ Largest Eigenvalue * x
 0.515251
 {% endhighlight %}
 
+Now that we have this method implemented, we can see that the eigenvalue on a matrix generated for a second order finite difference method has a bounded spectral radius. This is not a complete proof by any means, but it is easy to see that the change in largest eigenvector becomes smaller as the size increases.
+
+{% highlight c++ %}
+#include "../../matrix/src/matrix/matrix.h"
+#include <iostream>
+#include <vector>
+
+using Mtx = Matrix::Matrix<double>;
+
+int main() {
+  for (uint i = 0; i < 15; ++i) {
+    const auto size = (i + 1) * 5;
+    auto A = Mtx::genFDMatrix(size, 2);
+    const auto bigEiegen = std::get<0>(A.largestEigenpair());
+    std::cout << "2nd Order FDM Matrix Spectral Radius for size ";
+    std::cout << size << ":" << std::endl;
+    std::cout << bigEiegen << std::endl;
+  }
+
+  return EXIT_SUCCESS;
+}
+{% endhighlight %}
+
+Output:
+
+{% highlight c++ %}
+2nd Order FDM Matrix Spectral Radius for size 5:
+3.73205
+2nd Order FDM Matrix Spectral Radius for size 10:
+3.68251
+2nd Order FDM Matrix Spectral Radius for size 15:
+3.96157
+2nd Order FDM Matrix Spectral Radius for size 20:
+3.91114
+2nd Order FDM Matrix Spectral Radius for size 25:
+3.98256
+2nd Order FDM Matrix Spectral Radius for size 30:
+3.95809
+2nd Order FDM Matrix Spectral Radius for size 35:
+3.97406
+2nd Order FDM Matrix Spectral Radius for size 40:
+3.96918
+2nd Order FDM Matrix Spectral Radius for size 45:
+3.97042
+2nd Order FDM Matrix Spectral Radius for size 50:
+3.9702
+2nd Order FDM Matrix Spectral Radius for size 55:
+3.97023
+2nd Order FDM Matrix Spectral Radius for size 60:
+3.97022
+2nd Order FDM Matrix Spectral Radius for size 65:
+3.97022
+2nd Order FDM Matrix Spectral Radius for size 70:
+3.97022
+2nd Order FDM Matrix Spectral Radius for size 75:
+3.97022
+{% endhighlight %}
+
 **Implementation/Code:**
 
 This uses the forward iterative method
