@@ -144,6 +144,20 @@ namespace Matrix {
       T getVal(const uint& i, const uint& j) const;
 
       /**
+       * Flatten this matrix using a lexigraphical ordering
+       * @return A column matrix of flattened values for the matrix
+       */
+      Matrix<T> flatten() const;
+
+      /**
+       * Turn a flattened column vector back into a square matrix
+       * @param m Number of rows to form
+       * @param n Number of cols to form
+       * @return A matrix of dimension m x n
+       */
+      Matrix<T> squareUp(const uint& m, const uint& n) const;
+
+      /**
        * Get the diagonal as a vector
        * @param i Row number
        * @param j Column number

@@ -371,6 +371,37 @@ namespace Matrix {
   }
 
   template <typename T>
+  Matrix<T> Matrix<T>::flatten() const {
+    const auto m = std::get<0>(this->getSize());
+    const auto n = std::get<1>(this->getSize());
+
+    return Matrix<T>(m * n, 1, [&](const uint& a, const uint& b) {
+        const auto col = a % n;
+        const auto row = a / m;
+        (void) b;
+
+        return this->getVal(row, col);
+    });
+  }
+
+  template <typename T>
+  Matrix<T> Matrix<T>::squareUp(const uint& m, const uint& n) const {
+    const auto [ M, N ] = this->getSize();
+
+    if (N != 1) {
+      throw std::domain_error("Cannot square up non-column vector.");
+    }
+
+    if (M != m * n) {
+      throw std::domain_error("Cannot square up with provided size.");
+    }
+
+    return Matrix<T>(m, n, [&](const uint& row, const uint& col) {
+        return this->getVal(col + row * n, 0);
+    });
+  }
+
+  template <typename T>
   T Matrix<T>::trace() const {
     const auto m = std::get<1>(this->getSize());
     T sum = 0;
