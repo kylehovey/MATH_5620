@@ -98,16 +98,14 @@ Matrix::Matrix<T> solveLaplace(
         const auto [ mult, coords ] = sample;
         const auto [ _col, _row ] = coords;
 
-        std::cout << "If inside of interior\n";
-        std::cout << mult << " * (" << _col << ", " << _row << ")" << std::endl;
+        // If inside of interior
         if (_col >= 0 && _col < _intSize && _row >= 0 && _row < _intSize) {
-          std::cout << "Embed point inside of matrix\n";
+          // Embed point inside of matrix
           stencilOp.setVal(_col, _row, mult);
         }
       }
 
       // Flatten into a column vector
-      std::cout << stencilOp << std::endl;
       stencilOp = stencilOp.flatten();
 
       // Add values to the correct row in laplace operator
@@ -117,7 +115,13 @@ Matrix::Matrix<T> solveLaplace(
     }
   }
 
-  return lap;
+  // Solve system for solution
+  auto u = Matrix::Matrix<T>::solve(lap, rhs);
+
+  // Reform matrix
+  u = u.squareUp(_intSize, _intSize);
+
+  return u;
 }
 
 int main() {
@@ -170,8 +174,14 @@ int main() {
     });
   };
 
-  const auto soln = solveLaplace<double>(size, domain, fivePoint, boundary);
+  auto soln = solveLaplace<double>(size, domain, fivePoint, boundary);
 
+  std::cout << "Solution with 5-point stencil:" << std::endl;
+  std::cout << soln << std::endl;
+
+  soln = solveLaplace<double>(size, domain, ninePoint, boundary);
+
+  std::cout << "Solution with 9-point stencil:" << std::endl;
   std::cout << soln << std::endl;
 
   return EXIT_SUCCESS;
