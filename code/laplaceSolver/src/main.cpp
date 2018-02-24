@@ -7,9 +7,6 @@
 using Mtx = Matrix::Matrix<double>;
 
 template <typename T>
-using dubs = std::tuple<std::tuple<T, T>, std::tuple<T, T>>;
-
-template <typename T>
 using planeToScalar = std::function<T(T, T)>;
 
 template <typename T>
@@ -38,28 +35,66 @@ using stencilGen = std::function<stencil<T>(
 template <typename T>
 Matrix::Matrix<T> solveLaplace(
     const uint& size,
-    const dubs<T>& domain,
+    const coord<T>& domain,
     const stencilGen<T>& makeStencil,
     const planeToScalar<T>& dirichlet
 ) {
-  (void) size;
   (void) domain;
   (void) makeStencil;
   (void) dirichlet;
 
-  return Matrix::Matrix<T>(size, size);
+  // Find limits of domain
+  const auto a = std::get<0>(domain);
+  const auto b = std::get<1>(domain);
+  const auto h = (b - a) / (size - 1);
+
+  // Internal limits of sampling
+  const auto _a = a + h;
+  const auto _b = a + b - h;
+
+  // Instantiate output grid (interior of mesh)
+  Matrix::Matrix<T> rhs(
+      size - 2,
+      size - 2,
+      [&](const uint& row, const uint& col) {
+        // Determine location in domain
+        const auto x = a + h * (col + 1);
+        const auto y = a + h * (row + 1);
+
+        // Initialize an accumulator
+        T acc = 0;
+
+        // Determine stencil
+        const auto samples = makeStencil({ x, y }, h);
+
+        // For each point in stencil, subtract off boundary
+        for (const auto& sample : samples) {
+          const auto [ mult, coords ] = sample;
+          const auto [ _x, _y ] = coords;
+
+          // If outside of interior
+          if (_x < _a || x > _b || _y < _a || _y > _b) {
+            acc -= dirichlet(_x, _y);
+          }
+        }
+
+        return acc;
+      }
+  );
+
+  return rhs;
 }
 
 int main() {
   // Define domain
-  const dubs<double> domain = { { 0, 0 }, { 1, 1 } };
+  const coord<double> domain = { 0, 1 };
 
   // G(x, y) along the boundaries
   const planeToScalar<double> boundary =
-    [](const double& a, const double& b) -> double {
-      (void) b;
+    [](const double& x, const double& y) -> double {
+      (void) x;
 
-      return a == 1.0 ? 5.0 : 0;
+      return y == 1 ? 5.0 : 0;
     };
 
   // Define size of mesh
