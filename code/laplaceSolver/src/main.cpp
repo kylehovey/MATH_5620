@@ -27,7 +27,7 @@ using stencilGen = std::function<stencil<T>(
  * @param domain Lower-left and upper-right coordinates of domain
  * @param stencil Function that takes tuple of evaluation point coordinates
  *  and returns a vector of tuples for the resulting stencil that also
- *  includes multipliers. Example:
+ *  includes multipliers. Offsets should be integer multiples of h. Example:
  *    { (-4, (2, 2)), (1, (2, 3)), (1, (2, 1)) }
  * @param dirichlet Function u(x, y) along boundary
  * @return Matrix of values that resemble a solution over u's domain
@@ -39,10 +39,6 @@ Matrix::Matrix<T> solveLaplace(
     const stencilGen<T>& makeStencil,
     const planeToScalar<T>& dirichlet
 ) {
-  (void) domain;
-  (void) makeStencil;
-  (void) dirichlet;
-
   // Find limits of domain
   const auto a = std::get<0>(domain);
   const auto b = std::get<1>(domain);
@@ -51,11 +47,12 @@ Matrix::Matrix<T> solveLaplace(
   // Internal limits of sampling
   const auto _a = a + h;
   const auto _b = a + b - h;
+  const auto _intSize = size - 2;
 
   // Instantiate output grid (interior of mesh)
   Matrix::Matrix<T> rhs(
-      size - 2,
-      size - 2,
+      _intSize,
+      _intSize,
       [&](const uint& row, const uint& col) {
         // Determine location in domain
         const auto x = a + h * (col + 1);
@@ -67,13 +64,13 @@ Matrix::Matrix<T> solveLaplace(
         // Determine stencil
         const auto samples = makeStencil({ x, y }, h);
 
-        // For each point in stencil, subtract off boundary
         for (const auto& sample : samples) {
           const auto [ mult, coords ] = sample;
           const auto [ _x, _y ] = coords;
 
           // If outside of interior
-          if (_x < _a || x > _b || _y < _a || _y > _b) {
+          if (_x < _a || _x > _b || _y < _a || _y > _b) {
+            // Subtract off the boundary (since we are truncating it)
             acc -= dirichlet(_x, _y);
           }
         }
@@ -82,7 +79,45 @@ Matrix::Matrix<T> solveLaplace(
       }
   );
 
-  return rhs;
+  // Turn rhs into a column vector
+  rhs = rhs.flatten();
+
+  // Create the laplacian operator
+  Matrix::Matrix<T> lap(_intSize * _intSize, _intSize * _intSize);
+
+  // For each of the laplacian entries in lexigraphical order
+  for (uint col = 0; col < _intSize; ++col) {
+    for (uint row = 0; row < _intSize; ++row) {
+      // Create a temporary matrix to embed stencil in
+      Matrix::Matrix<T> stencilOp(_intSize, _intSize);
+
+      // Determine stencil w.r.t. index, not domain
+      const auto samples = makeStencil({ col, row }, 1);
+
+      for (const auto& sample : samples) {
+        const auto [ mult, coords ] = sample;
+        const auto [ _col, _row ] = coords;
+
+        std::cout << "If inside of interior\n";
+        std::cout << mult << " * (" << _col << ", " << _row << ")" << std::endl;
+        if (_col >= 0 && _col < _intSize && _row >= 0 && _row < _intSize) {
+          std::cout << "Embed point inside of matrix\n";
+          stencilOp.setVal(_col, _row, mult);
+        }
+      }
+
+      // Flatten into a column vector
+      std::cout << stencilOp << std::endl;
+      stencilOp = stencilOp.flatten();
+
+      // Add values to the correct row in laplace operator
+      for (uint j = 0; j < _intSize * _intSize; ++j) {
+        lap.setVal(row + _intSize * col, j, stencilOp.getVal(j, 0));
+      }
+    }
+  }
+
+  return lap;
 }
 
 int main() {
@@ -94,7 +129,7 @@ int main() {
     [](const double& x, const double& y) -> double {
       (void) x;
 
-      return y == 1 ? 5.0 : 0;
+      return y == 0 ? 5.0 : 0;
     };
 
   // Define size of mesh
