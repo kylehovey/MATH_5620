@@ -144,6 +144,18 @@ namespace Matrix {
       T getVal(const uint& i, const uint& j) const;
 
       /**
+       * Get the largest value in the matrix
+       * @return Largest value
+       */
+      T getMax() const;
+
+      /**
+       * Get the smallest value in the matrix
+       * @return Smallest value
+       */
+      T getMin() const;
+
+      /**
        * Flatten this matrix using a lexigraphical ordering
        * @return A column matrix of flattened values for the matrix
        */

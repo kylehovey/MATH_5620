@@ -1,8 +1,10 @@
 #include "../../matrix/src/matrix/matrix.h"
+#include "../../image/src/image/image.h"
 #include <functional>
 #include <vector>
 #include <iostream>
 #include <limits>
+#include <cmath>
 
 using Mtx = Matrix::Matrix<double>;
 
@@ -137,7 +139,7 @@ int main() {
     };
 
   // Define size of mesh
-  const uint size = 5;
+  const uint size = 50;
 
   // Stencil generation
   const stencilGen<double> fivePoint = [](
@@ -179,10 +181,13 @@ int main() {
   std::cout << "Solution with 5-point stencil:" << std::endl;
   std::cout << soln << std::endl;
 
-  soln = solveLaplace<double>(size, domain, ninePoint, boundary);
+  //soln = solveLaplace<double>(size, domain, ninePoint, boundary);
 
   std::cout << "Solution with 9-point stencil:" << std::endl;
   std::cout << soln << std::endl;
+
+  // Output to file for funsies
+  Image::ImageWriter::matrixHeatmap("soln.ppm", soln);
 
   return EXIT_SUCCESS;
 }

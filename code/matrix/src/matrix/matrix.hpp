@@ -371,6 +371,38 @@ namespace Matrix {
   }
 
   template <typename T>
+  T Matrix<T>::getMax() const {
+    const auto [ M, N ] = this->getSize();
+    T max = std::numeric_limits<T>::min();
+
+    for (uint row = 0; row < M; ++row) {
+      for (uint col = 0; col < N; ++col) {
+        const auto val = this->getVal(row, col);
+
+        max = val > max ? val : max;
+      }
+    }
+
+    return max;
+  }
+
+  template <typename T>
+  T Matrix<T>::getMin() const {
+    const auto [ M, N ] = this->getSize();
+    T min = std::numeric_limits<T>::max();
+
+    for (uint row = 0; row < M; ++row) {
+      for (uint col = 0; col < N; ++col) {
+        const auto val = this->getVal(row, col);
+
+        min = val < min ? val : min;
+      }
+    }
+
+    return min;
+  }
+
+  template <typename T>
   Matrix<T> Matrix<T>::flatten() const {
     const auto m = std::get<0>(this->getSize());
     const auto n = std::get<1>(this->getSize());
