@@ -73,8 +73,8 @@ namespace Image {
     // Color resolution
     outFile << 255 << std::endl;
 
-    // Get max value of matrix
-    const auto max = grid.getMax();
+    // Determine range of values
+    const auto range = (grid.getMax() - grid.getMin()) / 2;
 
     // Color range
     const auto wheel = Image::lerp(Image::Blue, Image::Red);
@@ -90,7 +90,7 @@ namespace Image {
         const auto val = grid.getVal(row, col);
 
         // Get color for cell
-        const auto color = wheel((double) val / max);
+        const auto color = wheel((double) val / range);
 
         // Write value out
         outFile << color.R << " ";

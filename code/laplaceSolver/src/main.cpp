@@ -27,6 +27,7 @@ using stencilGen = std::function<stencil<T>(
  * Solve ∇²u(x, y) = f(x, y)
  * @param size Mesh size
  * @param domain Lower-left and upper-right coordinates of domain
+ * @param driver Driving function (f(x, y) on the r.h.s.)
  * @param stencil Function that takes tuple of evaluation point coordinates
  *  and returns a vector of tuples for the resulting stencil that also
  *  includes multipliers. Offsets should be integer multiples of h. Example:
@@ -38,6 +39,7 @@ template <typename T>
 Matrix::Matrix<T> solveLaplace(
     const uint& size,
     const coord<T>& domain,
+    const planeToScalar<T>& driver,
     const stencilGen<T>& makeStencil,
     const planeToScalar<T>& dirichlet
 ) {
@@ -62,6 +64,9 @@ Matrix::Matrix<T> solveLaplace(
 
         // Initialize an accumulator
         T acc = 0;
+
+        // Add on driving function
+        acc += driver(x, y);
 
         // Determine stencil
         const auto samples = makeStencil({ x, y }, h);
@@ -130,16 +135,23 @@ int main() {
   // Define domain
   const coord<double> domain = { 0, 1 };
 
+  // Define driving function
+  const planeToScalar<double> driver =
+    [](const double& x, const double& y) {
+      return std::sin(x * y);
+    };
+
   // G(x, y) along the boundaries
   const planeToScalar<double> boundary =
     [](const double& x, const double& y) -> double {
       (void) x;
+      (void) y;
 
-      return y == 0 ? 5.0 : 0;
+      return 0.0;
     };
 
   // Define size of mesh
-  const uint size = 50;
+  const uint size = 20;
 
   // Stencil generation
   const stencilGen<double> fivePoint = [](
@@ -176,12 +188,12 @@ int main() {
     });
   };
 
-  auto soln = solveLaplace<double>(size, domain, fivePoint, boundary);
+  auto soln = solveLaplace<double>(size, domain, driver, fivePoint, boundary);
 
   std::cout << "Solution with 5-point stencil:" << std::endl;
   std::cout << soln << std::endl;
 
-  //soln = solveLaplace<double>(size, domain, ninePoint, boundary);
+  soln = solveLaplace<double>(size, domain, driver, ninePoint, boundary);
 
   std::cout << "Solution with 9-point stencil:" << std::endl;
   std::cout << soln << std::endl;
