@@ -15,7 +15,7 @@ layout: page
 
 This function solves the laplace equation over a square domain with Dirichlet boundary conditions that can be arbitrarily specified (homogeneous or not). In particular, we are interested in solving
 
-# \\[ \nabla^2 u(x, y) = 0 | (x, y) \in (a, b) \times (a, b) := D \\]
+# \\[ \nabla^2 u(x, y) = f(x, y) | (x, y) \in (a, b) \times (a, b) := D \\]
 
 with Dirichlet boundary conditions
 
@@ -60,12 +60,19 @@ First, we generate the basic parameters that define the type of analysis we wish
 // Define domain
 const coord<double> domain = { 0, 1 };
 
+// Define driving function
+const planeToScalar<double> driver =
+  [](const double& x, const double& y) {
+    return std::sin(x * y);
+  };
+
 // G(x, y) along the boundaries
 const planeToScalar<double> boundary =
   [](const double& x, const double& y) -> double {
     (void) x;
+    (void) y;
 
-    return y == 0 ? 5.0 : 0;
+    return 0.0;
   };
 
 // Define size of mesh
@@ -81,13 +88,14 @@ const stencilGen<double> fivePoint = [](
     const double& h
 ) {
   const auto [ x, y ] = center;
+  const auto mult = 1.0 / (double) (h * h);
 
   return stencil<double>({
-    { -4,{ x + 0, y + 0 } },
-    { 1, { x + h, y + 0 } },
-    { 1, { x - h, y + 0 } },
-    { 1, { x + 0, y + h } },
-    { 1, { x + 0, y - h } }
+    { mult * -4,{ x + 0, y + 0 } },
+    { mult * 1, { x + h, y + 0 } },
+    { mult * 1, { x - h, y + 0 } },
+    { mult * 1, { x + 0, y + h } },
+    { mult * 1, { x + 0, y - h } }
   });
 };
 
@@ -96,17 +104,18 @@ const stencilGen<double> ninePoint = [](
     const double& h
 ) {
   const auto [ x, y ] = center;
+  const auto mult = 1.0 / (double) (h * h);
 
   return stencil<double>({
-    { -8, { x - 0, y + 0 } },
-    { 1,  { x - 0, y + h } },
-    { 1,  { x - 0, y - h } },
-    { 1,  { x + h, y + 0 } },
-    { 1,  { x + h, y + h } },
-    { 1,  { x + h, y - h } },
-    { 1,  { x - h, y + 0 } },
-    { 1,  { x - h, y + h } },
-    { 1,  { x - h, y - h } }
+    { mult * -8, { x - 0, y + 0 } },
+    { mult * 1,  { x - 0, y + h } },
+    { mult * 1,  { x - 0, y - h } },
+    { mult * 1,  { x + h, y + 0 } },
+    { mult * 1,  { x + h, y + h } },
+    { mult * 1,  { x + h, y - h } },
+    { mult * 1,  { x - h, y + 0 } },
+    { mult * 1,  { x - h, y + h } },
+    { mult * 1,  { x - h, y - h } }
   });
 };
 {% endhighlight %}
@@ -114,12 +123,12 @@ const stencilGen<double> ninePoint = [](
 Then, to solve the equation, we just need to provide these parameters to the solver function.
 
 {% highlight C++ %}
-auto soln = solveLaplace<double>(size, domain, fivePoint, boundary);
+auto soln = solveLaplace<double>(size, domain, driver, fivePoint, boundary);
 
 std::cout << "Solution with 5-point stencil:" << std::endl;
 std::cout << soln << std::endl;
 
-soln = solveLaplace<double>(size, domain, ninePoint, boundary);
+soln = solveLaplace<double>(size, domain, driver, ninePoint, boundary);
 
 std::cout << "Solution with 9-point stencil:" << std::endl;
 std::cout << soln << std::endl;
@@ -127,19 +136,23 @@ std::cout << soln << std::endl;
 
 Output:
 
-Since I required the upper boundary (where \\( y = 0 \\) since I am using matrix row as \\(x\\)) to have a value of \\( 5.0 \\), then we should expect to see a smooth distribution of values that are resemble a Gaussian distribution centered about the vertical that decreases in overall magnitude as we reach the bottom of the domain. Even with a small mesh for more terse output, it is apparent that the gaussian symmetry exists for both solutions:
+With a \\(25\\) point mesh (\\(9\\) interior points), we get the following result:
 
 {% highlight C++ %}
 Solution with 5-point stencil:
-2.14286 2.63393 2.14286
-0.9375 1.25 0.9375
-0.357143 0.491071 0.357143
+-0.0970489 -0.162868 -0.1537
+-0.162868 -0.276049 -0.265528
+-0.1537 -0.265528 -0.266089
 
 Solution with 9-point stencil:
-2.53514 2.92396 2.53514
-0.964286 1.39286 0.964286
-0.357719 0.504608 0.357719
+-0.0353471 -0.0593491 -0.0556861
+-0.0593491 -0.101619 -0.0981173
+-0.0556861 -0.0981173 -0.103895
 {% endhighlight %}
+
+This is much more interesting when we increase the mesh size to a \\(200 \times 200 \\) grid. Since it would be nearly incomprehensible to look at a solution that large with just textual output, I wrote a method to convert a matrix into a heatmap where the color range is restricted linearly between the min and max values of the matrix. Here is the aformentioned higher-res solution:
+
+![Laplace Solution Image](/MATH_5620/images/laplace.jpg)
 
 **Implementation/Code:**
 
@@ -150,6 +163,7 @@ To implement this solver in a general way, I use lambda functions as parameters 
  * Solve ∇²u(x, y) = f(x, y)
  * @param size Mesh size
  * @param domain Lower-left and upper-right coordinates of domain
+ * @param driver Driving function (f(x, y) on the r.h.s.)
  * @param stencil Function that takes tuple of evaluation point coordinates
  *  and returns a vector of tuples for the resulting stencil that also
  *  includes multipliers. Offsets should be integer multiples of h. Example:
@@ -161,6 +175,7 @@ template <typename T>
 Matrix::Matrix<T> solveLaplace(
     const uint& size,
     const coord<T>& domain,
+    const planeToScalar<T>& driver,
     const stencilGen<T>& makeStencil,
     const planeToScalar<T>& dirichlet
 ) {
@@ -185,6 +200,9 @@ Matrix::Matrix<T> solveLaplace(
 
         // Initialize an accumulator
         T acc = 0;
+
+        // Add on driving function
+        acc += driver(x, y);
 
         // Determine stencil
         const auto samples = makeStencil({ x, y }, h);
@@ -241,7 +259,7 @@ Matrix::Matrix<T> solveLaplace(
   }
 
   // Solve system for solution
-  auto u = Matrix::Matrix<T>::solve(lap, rhs);
+  auto u = Matrix::Matrix<T>::solve(lap, rhs, Matrix::Solve::Jacobi);
 
   // Reform matrix
   u = u.squareUp(_intSize, _intSize);
