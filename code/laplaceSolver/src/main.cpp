@@ -123,7 +123,7 @@ Matrix::Matrix<T> solveLaplace(
   }
 
   // Solve system for solution
-  auto u = Matrix::Matrix<T>::solve(lap, rhs);
+  auto u = Matrix::Matrix<T>::solve(lap, rhs, Matrix::Solve::Jacobi);
 
   // Reform matrix
   u = u.squareUp(_intSize, _intSize);
@@ -151,7 +151,7 @@ int main() {
     };
 
   // Define size of mesh
-  const uint size = 20;
+  const uint size = 5;
 
   // Stencil generation
   const stencilGen<double> fivePoint = [](
@@ -159,13 +159,14 @@ int main() {
       const double& h
   ) {
     const auto [ x, y ] = center;
+    const auto mult = 1.0 / (double) (h * h);
 
     return stencil<double>({
-      { -4,{ x + 0, y + 0 } },
-      { 1, { x + h, y + 0 } },
-      { 1, { x - h, y + 0 } },
-      { 1, { x + 0, y + h } },
-      { 1, { x + 0, y - h } }
+      { mult * -4,{ x + 0, y + 0 } },
+      { mult * 1, { x + h, y + 0 } },
+      { mult * 1, { x - h, y + 0 } },
+      { mult * 1, { x + 0, y + h } },
+      { mult * 1, { x + 0, y - h } }
     });
   };
 
@@ -174,17 +175,18 @@ int main() {
       const double& h
   ) {
     const auto [ x, y ] = center;
+    const auto mult = 1.0 / (double) (h * h);
 
     return stencil<double>({
-      { -8, { x - 0, y + 0 } },
-      { 1,  { x - 0, y + h } },
-      { 1,  { x - 0, y - h } },
-      { 1,  { x + h, y + 0 } },
-      { 1,  { x + h, y + h } },
-      { 1,  { x + h, y - h } },
-      { 1,  { x - h, y + 0 } },
-      { 1,  { x - h, y + h } },
-      { 1,  { x - h, y - h } }
+      { mult * -8, { x - 0, y + 0 } },
+      { mult * 1,  { x - 0, y + h } },
+      { mult * 1,  { x - 0, y - h } },
+      { mult * 1,  { x + h, y + 0 } },
+      { mult * 1,  { x + h, y + h } },
+      { mult * 1,  { x + h, y - h } },
+      { mult * 1,  { x - h, y + 0 } },
+      { mult * 1,  { x - h, y + h } },
+      { mult * 1,  { x - h, y - h } }
     });
   };
 
