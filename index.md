@@ -22,3 +22,8 @@ layout: default
   2. [Power Iteration](./powerIteration)
   3. [Inverse Power Iteration](./inverseIteration)
   4. [Laplace Equation with FDM](./laplace)
+* HW 4
+  1. [Gauss-Siedel](./gaussSiedel)
+  2. [Conjugate Gradient](./conjugateGradient)
+  3. [CG-Solution to Poisson](./cgPoisson)
+  4. [Implicit Euler](./implicitEuler)
