@@ -521,12 +521,44 @@ namespace Matrix {
         }
       });
 
-      auto R = A.lTriangular() + A.uTriangular();
+      const auto R = A.lTriangular() + A.uTriangular();
 
       auto x = b;
 
       for (unsigned int i = 0; i < 500; ++i) {
         x = invD * (b - R * x);
+      }
+
+      return x;
+    } else if (method == Solve::GaussSiedel) {
+      if (!A.isDiagDom()) {
+        throw std::domain_error("Input matrix is not diagonally dominant.");
+      }
+
+      Matrix<T> x(m, 1, [](const uint& a, const uint& b) {
+        (void) a;
+        (void) b;
+
+        return 1;
+      });
+
+      for (uint iter = 0; iter < 500; ++iter) {
+        // Forward substitution algorithm from Wikipedia
+        // https://en.wikipedia.org/wiki/Gauss–Seidel_method#Algorithm
+        for (uint i = 0; i < m; ++i) {
+          T acc = 0;
+
+          for (uint j = 0; j < m; ++j) {
+            if (i != j) {
+              acc += A.getVal(i, j) * x.getVal(j, 0);
+            }
+          }
+
+          const auto mult = 1.0 / (double) A.getVal(i, i);
+          const auto bi = b.getVal(i, 0);
+
+          x.setVal(i, 0, mult * (bi - acc));
+        }
       }
 
       return x;

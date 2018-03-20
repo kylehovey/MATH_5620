@@ -16,6 +16,7 @@ namespace Matrix {
     enum Method {
       LU,
       Jacobi,
+      GaussSiedel,
       Thompson
     };
   };

@@ -1,0 +1,3 @@
+/Users/speleo/Documents/Git/MATH_5620/code/gaussSiedel/CMakeFiles/rebuild_cache.dir
+/Users/speleo/Documents/Git/MATH_5620/code/gaussSiedel/CMakeFiles/edit_cache.dir
+/Users/speleo/Documents/Git/MATH_5620/code/gaussSiedel/CMakeFiles/run.dir

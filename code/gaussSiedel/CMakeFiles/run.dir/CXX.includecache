@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/speleo/Documents/Git/MATH_5620/code/gaussSiedel/src/main.cpp
+../../matrix/src/matrix/matrix.h
+/Users/speleo/Documents/Git/MATH_5620/code/matrix/src/matrix/matrix.h
+iostream
+-
+vector
+-
+
+/Users/speleo/Documents/Git/MATH_5620/code/matrix/src/matrix/matrix.h
+functional
+-
+vector
+-
+tuple
+-
+matrix.hpp
+/Users/speleo/Documents/Git/MATH_5620/code/matrix/src/matrix/matrix.hpp
+matrixOps.hpp
+/Users/speleo/Documents/Git/MATH_5620/code/matrix/src/matrix/matrixOps.hpp
+
+/Users/speleo/Documents/Git/MATH_5620/code/matrix/src/matrix/matrix.hpp
+matrix.h
+/Users/speleo/Documents/Git/MATH_5620/code/matrix/src/matrix/matrix.h
+iostream
+-
+cmath
+-
+limits
+-
+
+/Users/speleo/Documents/Git/MATH_5620/code/matrix/src/matrix/matrixOps.hpp
+matrix.h
+/Users/speleo/Documents/Git/MATH_5620/code/matrix/src/matrix/matrix.h
+iostream
+-
+
