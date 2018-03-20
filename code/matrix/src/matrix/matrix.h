@@ -17,7 +17,8 @@ namespace Matrix {
       LU,
       Jacobi,
       GaussSiedel,
-      Thompson
+      Thompson,
+      ConjugateGradient
     };
   };
 
@@ -282,9 +283,18 @@ namespace Matrix {
       );
 
       /**
+       * Find the inner product between two column vectors
+       * @param u Column or row matrix
+       * @param v Column or row matrix
+       * @return <u, v>
+       */
+      static T innerProduct(const Matrix<T>& u, const Matrix<T>& v);
+
+      /**
        * Find the norm of a vector (row or column)
        * @param v Column or row matrix
        * @param n The order of the norm
+       * @return The norm
        */
       static T vNorm(const Matrix<T>& v, const uint& n = 2);
 

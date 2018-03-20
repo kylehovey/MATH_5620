@@ -562,6 +562,28 @@ namespace Matrix {
       }
 
       return x;
+    } else if (method == Solve::ConjugateGradient) {
+      auto x = b;
+      auto r = b - (A * x);
+      auto p = r;
+
+      for (uint i = 0; i < 500; ++i) {
+        const double alpha =
+          Matrix::innerProduct(r, r) / Matrix::innerProduct(p, A * p);
+
+        x = x + (alpha * p);
+        const auto lastR = r;
+        r = r - (alpha * A * p);
+
+        if (Matrix::vNorm(r - lastR, 2) < 0.001) { break; }
+
+        const double beta =
+          Matrix::innerProduct(r, r) / Matrix::innerProduct(lastR, lastR);
+
+        p = r + (beta * p);
+      }
+
+      return x;
     } else if (method == Solve::Thompson) {
       if (!A.isNDiagonal(3)) {
         throw std::domain_error("Thompson method needs tri-diagonal matrix.");
@@ -656,6 +678,28 @@ namespace Matrix {
     }
 
     return Matrix<T>(m);
+  }
+
+  template <typename T>
+  T Matrix<T>::innerProduct(const Matrix<T>& u, const Matrix<T>& v) {
+    const auto [ m, n ] = u.getSize();
+    const auto [ M, N ] = v.getSize();
+
+    if (m != M || n != N || ((m != M && n != N) || (m != 1 && n != 1))) {
+      throw std::domain_error("Cannot find inner product, wrong dimensions.");
+    }
+
+    T acc = 0;
+    const bool col = (n == 1);
+    uint len = col ? m : n;
+
+    for (uint i = 0; i < len; ++i) {
+      acc += col ?
+        u.getVal(i, 0) * v.getVal(i, 0) :
+        u.getVal(0, i) * v.getVal(0, i);
+    }
+
+    return acc;
   }
 
   template <typename T>
