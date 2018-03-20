@@ -16,8 +16,6 @@ int main() {
 
   auto b = A * _x;
 
-  std::cout << b << std::endl;
-
   auto x = Mtx::solve(A, b, Matrix::Solve::GaussSiedel);
 
   std::cout << x << std::endl;
