@@ -26,4 +26,4 @@ layout: default
   1. [Gauss-Siedel](./gaussSiedel)
   2. [Conjugate Gradient](./conjugateGradient)
   3. [CG-Solution to Poisson](./cgPoisson)
-  4. [Implicit Euler](./implicitEuler)
+  4. [Explicit Euler](./explicitEuler)

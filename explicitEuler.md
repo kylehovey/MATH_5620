@@ -1,6 +1,6 @@
 ---
 math: true
-permalink: /implicitEuler
+permalink: /explicitEuler
 title: Implicit Euler
 layout: page
 ---
