@@ -1,11 +1,11 @@
 ---
 math: true
 permalink: /explicitEuler
-title: Implicit Euler
+title: Explicit Euler
 layout: page
 ---
 
-**Routine Name**:
+**Routine Name**: Explicit Euler Method
 
 **Author**: Kyle Hovey
 
