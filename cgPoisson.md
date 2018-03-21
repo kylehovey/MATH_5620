@@ -213,7 +213,7 @@ Matrix::Matrix<T> solveLaplace(
   }
 
   // Solve system for solution
-  auto u = Matrix::Matrix<T>::solve(lap, rhs, Matrix::Solve::LU);
+  auto u = Matrix::Matrix<T>::solve(lap, rhs, Matrix::Solve::ConjugateGradient);
 
   // Reform matrix
   u = u.squareUp(_intSize, _intSize);
