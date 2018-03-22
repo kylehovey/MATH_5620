@@ -29,16 +29,19 @@ endo<T> genEulerSolution(
   cache.push_back(uInit);
 
   return [=](const T& t) mutable -> T {
-    const auto step = std::round(t / dt);
+    const auto step = std::floor(t / dt);
 
-    if (step > cache.size()) {
-      for (auto i = cache.size() - 1; i < step; ++i) {
-        const auto lastVal = cache[i];
+    if (step >= cache.size()) {
+      const auto size = cache.size();
+
+      for (auto i = size; i <= step; ++i) {
+        const auto lastVal = cache[i - 1];
+
         cache.push_back(lastVal + dt * f(t, lastVal));
       }
     }
 
-    return cache[step - 1];
+    return cache[step];
   };
 }
 
@@ -64,7 +67,7 @@ int main() {
   // Test the solution
   for (auto i = 0; i < 10; ++i) {
     std::cout << "u(" << i * dt << ")" << std::endl;
-    std::cout << exact(i * dt) << std::endl;
+    std::cout << exact(i * dt) << " vs ";
     std::cout << soln(i * dt) << std::endl;
   }
 

@@ -49,7 +49,7 @@ int main() {
 
   // Test the solution
   for (auto i = 0; i < 10; ++i) {
-    std::cout << "u(" << i * dt << ")" << std::endl;
+    std::cout << "u(" << i * dt << ")" << " vs ";
     std::cout << exact(i * dt) << std::endl;
     std::cout << soln(i * dt) << std::endl;
   }
@@ -62,35 +62,25 @@ Output:
 
 {% highlight C++ %}
 u(0)
-1
--3.10504e+231
+1 vs 1
 u(0.01)
-1.00005
-1
+1.00005 vs 1.0001
 u(0.02)
-1.0002
-1.0002
+1.0002 vs 1.0003
 u(0.03)
-1.00045
-1.0004
+1.00045 vs 1.0006
 u(0.04)
-1.0008
-1.0008
+1.0008 vs 1.001
 u(0.05)
-1.00125
-1.0012
+1.00125 vs 1.0015
 u(0.06)
-1.0018
-1.0018
+1.0018 vs 1.0021
 u(0.07)
-1.00245
-1.0024
+1.00245 vs 1.0028
 u(0.08)
-1.00321
-1.0032
+1.00321 vs 1.00361
 u(0.09)
-1.00406
-1.00401
+1.00406 vs 1.00451
 {% endhighlight %}
 
 **Implementation/Code:**
@@ -127,16 +117,19 @@ endo<T> genEulerSolution(
   cache.push_back(uInit);
 
   return [=](const T& t) mutable -> T {
-    const auto step = std::round(t / dt);
+    const auto step = std::floor(t / dt);
 
-    if (step > cache.size()) {
-      for (auto i = cache.size() - 1; i < step; ++i) {
-        const auto lastVal = cache[i];
+    if (step >= cache.size()) {
+      const auto size = cache.size();
+
+      for (auto i = size; i <= step; ++i) {
+        const auto lastVal = cache[i - 1];
+
         cache.push_back(lastVal + dt * f(t, lastVal));
       }
     }
 
-    return cache[step - 1];
+    return cache[step];
   };
 }
 {% endhighlight %}
