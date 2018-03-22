@@ -15,6 +15,8 @@ layout: page
 
 The Conjugate Gradient method utilizes the vector gradient of a generalized potential function for a linear system \\(A\vec{x} = \vec{b}\\). This method works well for elliptic systems as we can guarantee a global minima. We reach successive minimizers along the direction of the instantaneous gradient of our potential function by finding the length we need to step in that direction to reach a valley.
 
+This method resulted in only a few (usually less than 10) iterations to completion, whereas matrix separation techniques I have used before took hundreds of iterations on average.
+
 **Input**:
 
 The matrix and the output of the linear system.
