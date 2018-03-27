@@ -22,7 +22,7 @@ namespace Euler {
    * @return Function that gives you the output at time t
    */
   template <typename T>
-  endo<T> genEulerSolution(
+  endo<T> genExplicitEulerSolution(
       const driver<T>& f,
       const T& dt,
       const T& uInit

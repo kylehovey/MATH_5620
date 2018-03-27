@@ -18,7 +18,7 @@ int main() {
   };
 
   // Solve the system
-  const auto soln = Euler::genEulerSolution<D>(f, dt, uInit);
+  const auto soln = Euler::genExplicitEulerSolution<D>(f, dt, uInit);
 
   // Test the solution
   for (auto i = 0; i < 10; ++i) {
