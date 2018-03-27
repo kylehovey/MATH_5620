@@ -1,5 +1,5 @@
 #include <iostream>
-#include "euler/euler.h"
+#include "../../euler/src/euler/euler.h"
 
 int main() {
   // Domain and range of solution
