@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/speleo/Documents/Git/MATH_5620/code/testCases/src/main.cpp
+iostream
+-
+testCases/testCases.h
+/Users/speleo/Documents/Git/MATH_5620/code/testCases/src/testCases/testCases.h
+
+/Users/speleo/Documents/Git/MATH_5620/code/testCases/src/testCases/testCases.h
+functional
+-
+cmath
+-
+
