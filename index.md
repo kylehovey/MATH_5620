@@ -34,3 +34,8 @@ layout: default
   4. [Runge Kutta](./rungeKutta)
   5. [Predictor Corrector](./predictorCorrector)
   6. [Summary](./iterativeMethodsSummary)
+* HW 6
+  1. [Some Experiments](./numericalExperiments)
+  2. [Implicit Euler Experiment](./implicitExperiment)
+  3. [Predictor Corrector Experiment](./predictorExperiment)
+  4. [Runge Kutta Experiment](./rungeExperiment)
