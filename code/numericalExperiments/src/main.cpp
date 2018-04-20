@@ -1,27 +1,3 @@
----
-math: true
-permalink: /numericalExperiments
-title: Numerical Experiments
-layout: page
----
-
-**Routine Name**: Numerical Experiments
-
-**Author**: Kyle Hovey
-
-**Language**: C++
-
-**Description/Purpose**:
-
-This code tests the accuracy of a given method against some examples found in the course textbook. In \\(7.1\\), we analyze \\(u' = -\sin(x); u_0 = 1; dt = 10^{-3}\\). In \\(7.2\\), we change our driving function to \\(u' = \lambda (u - \cos(x)) - \sin(x)\\) and require \\(\lambda = -10\\). And finally, for \\(7.3\\), we require \\(\lambda = -2100\\).
-
-**Input**: A method for solving the examples
-
-**Output**: The solutions given by the method
-
-**Usage/Example**:
-
-{% highlight C++ %}
 #include <iostream>
 #include <cmath>
 #include "../../euler/src/euler/euler.h"
@@ -30,7 +6,7 @@ int main() {
   /*
    * 7.1
    */
-  const auto dt = 1E-6;
+  const auto dt = 1E-3;
   const auto uo = 1;
   const auto simple = [](const double& t, const double& u) -> double {
     (void) u;
@@ -77,29 +53,3 @@ int main() {
 
   return EXIT_SUCCESS;
 }
-{% endhighlight %}
-
-Output:
-
-Notice how the output for the first two examples has very high error. I'm still not completely sure why this happened (as there was very little error when testing the exact same code for the last assignment), but it is easy to see that the error blows up for \\(7.3\\) where \\(\lambda = -21000\\).
-
-{% highlight C++ %}
-7.1:
-U_2000 = approx(2): -0.818595
-Exact(2): -0.416147
-Error: 0.402448
-
-7.2:
-U_2000 = approx(2): -0.507077
-Exact(2): -0.416147
-Error: 0.0909297
-
-7.3:
-U_2000 = approx(2): 8.64194e+82
-Exact(2): -0.416147
-Error: 8.64194e+82
-{% endhighlight %}
-
-**Implementation/Code:**
-
-All solver implementation for this assignment was covered in the last assignment.
