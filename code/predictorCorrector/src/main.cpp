@@ -1,13 +1,6 @@
 #include <iostream>
-#include <vector>
-#include <array>
 #include "../../testCases/src/testCases/testCases.h"
-
-template <typename T>
-using endo = std::function<T(const T&)>;
-
-template <typename T>
-using driver = std::function<T(const T&, const T&)>;
+#include "./predictorCorrector/predictorCorrector.h"
 
 /**
  * Compare the output of two endomorphisms over a given
@@ -19,8 +12,8 @@ using driver = std::function<T(const T&, const T&)>;
  */
 template <typename T>
 void printComparison(
-    const endo<T>& exact,
-    const endo<T>& approx,
+    const PredCorr::endo<T>& exact,
+    const PredCorr::endo<T>& approx,
     const std::tuple<T, T> range,
     const unsigned int& steps
 ) {
@@ -32,45 +25,6 @@ void printComparison(
     std::cout << "exact(" << t << ") = " << exact(t) << std::endl;
     std::cout << "approx(" << t << ") = " << approx(t) << std::endl;
   }
-}
-
-/**
- * Solve a basic differential equation using a Predictor Corrector technique.
- *  u' = f(t, u)
- * @param {f} RHS of differential equation (utilizes uPrime)
- * @param {dt} Differential of time between samples
- *  (output function will round to these)
- * @param {uInit} Initial value of u(0)
- * @return Function that gives you the output at time t
- */
-template <typename T>
-endo<T> predictorCorrector(
-    const driver<T>& f,
-    const T& dt,
-    const T& uInit
-) {
-  // Memoization cache
-  std::vector<T> cache = { };
-  cache.push_back(uInit);
-
-  return [=](const T& t) mutable -> T {
-    const auto step = std::floor(t / dt);
-
-    if (step >= cache.size()) {
-      const auto size = cache.size();
-
-      for (auto i = size; i <= step; ++i) {
-        const auto lastVal = cache[i - 1];
-
-        const auto kOne = lastVal + dt * f(t, lastVal);
-        const auto kTwo = lastVal + 0.5 * dt * (f(t, lastVal) + f(t, kOne));
-
-        cache.push_back(kTwo);
-      }
-    }
-
-    return cache[step];
-  };
 }
 
 int main() {
@@ -92,7 +46,7 @@ int main() {
 
   std::cout << "|||||||||| Lambda DiffEQ |||||||||" << std::endl;
   for (const auto lambda : lambdas) {
-    const auto approx = predictorCorrector<double>(
+    const auto approx = PredCorr::predictorCorrector<double>(
         [=](const double& t, const double& u) -> double {
           (void) t;
           return lambda * u;
@@ -112,7 +66,7 @@ int main() {
   std::cout << std::endl;
   std::cout << "|||||||||| Logistic DiffEQ |||||||||" << std::endl;
   for (const auto Po : Pos) {
-    const auto approx = predictorCorrector<double>(
+    const auto approx = PredCorr::predictorCorrector<double>(
         [=](const double& t, const double& P) -> double {
           (void) t;
 
