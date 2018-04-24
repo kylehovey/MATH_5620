@@ -39,3 +39,13 @@ layout: default
   2. [Implicit Euler Experiment](./implicitExperiment)
   3. [Predictor Corrector Experiment](./predictorExperiment)
   4. [Runge Kutta Experiment](./rungeExperiment)
+* HW 7
+  1. [Heat Equation](./heatEquation)
+  2. [Heat Equation w/ Implicit Euler](./eulerHeat)
+  3. [Heat Equation w/ Predictor Corrector](./predictorHeat)
+  4. [Heat Equation w/ Runge Kutta](./rungeHeat)
+* HW 8
+  1. [Upwinding](./upwinding)
+  2. [Lax Wendorff](./laxWendorff)
+  3. [Warming and Beam Methods](./warmingBeam)
+  4. [Von Neumann Stability](./vonNeumann)
