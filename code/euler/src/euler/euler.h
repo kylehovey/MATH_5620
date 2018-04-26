@@ -67,7 +67,7 @@ namespace Euler {
         for (auto i = size; i <= step; ++i) {
           const auto lastVal = cache[i - 1];
 
-          cache.push_back(lastVal + dt * f(t, lastVal));
+          cache.push_back(lastVal + dt * f(i * dt, lastVal));
         }
       }
 
@@ -106,7 +106,7 @@ namespace Euler {
           //cache.push_back(lastVal + dt * f(t, lastVal));
           cache.push_back(newton<double>(
               [&](const double& nextU) -> double {
-                return (nextU - lastVal) / dt - f(t, nextU);
+                return (nextU - lastVal) / dt - f(i * dt, nextU);
               },
               lastVal
           ));

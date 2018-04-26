@@ -39,9 +39,11 @@ namespace PredCorr {
 
         for (auto i = size; i <= step; ++i) {
           const auto lastVal = cache[i - 1];
+          const auto tNow = i * dt;
 
-          const auto kOne = lastVal + dt * f(t, lastVal);
-          const auto kTwo = lastVal + 0.5 * dt * (f(t, lastVal) + f(t, kOne));
+          const auto kOne = lastVal + dt * f(tNow, lastVal);
+          const auto kTwo = lastVal + 0.5 * dt *
+            (f(tNow, lastVal) + f(tNow, kOne));
 
           cache.push_back(kTwo);
         }

@@ -78,11 +78,12 @@ namespace RungeKutta {
 
         for (auto i = size; i <= step; ++i) {
           const auto lastVal = cache[i - 1];
+          const auto tNow = i * dt;
 
-          const auto kOne = dt * f(t, lastVal);
-          const auto kTwo = dt * f(t + dt / 2, lastVal + kOne / 2);
-          const auto kThree = dt * f(t + dt / 2, lastVal + kTwo / 2);
-          const auto kFour = dt * f(t + dt, lastVal + kThree);
+          const auto kOne = dt * f(tNow, lastVal);
+          const auto kTwo = dt * f(tNow + dt / 2, lastVal + kOne / 2);
+          const auto kThree = dt * f(tNow + dt / 2, lastVal + kTwo / 2);
+          const auto kFour = dt * f(tNow + dt, lastVal + kThree);
 
           cache.push_back(lastVal + kFour);
         }
