@@ -5,7 +5,7 @@ layout: default
 
 ## Software Manual
 
-[Manuals for all assignment code.](./softwareManual/index.html)
+[Manuals for libraries used in assignments.](./softwareManual/index.html)
 
 All software documentation is generated using the popular Doxygen with JavaDoc-style comments on the code. To regenerate documentation, run `doxygen doxygen.cfg` in the project root (in the `gh-pages` branch).
 
