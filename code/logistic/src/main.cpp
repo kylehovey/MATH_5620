@@ -10,7 +10,7 @@ int main() {
     Po = 1;
 
   // Generate the required function
-  auto logistic = genLogistic<double>(alpha, beta, Po);
+  auto logistic = Logistic::genLogistic<double>(alpha, beta, Po);
 
   // Call it for some basic values
   for (int i = -10; i <= 10; i++) {
