@@ -10,8 +10,10 @@ int main() {
   std::cout << "PI: " << exact << '\n';
   std::cout << "Approximation: " << approx << '\n';
   std::cout << "- - - - - - - - - -" << '\n';
-  std::cout << "Absolute: " << absoluteError<double>(approx, exact) << '\n';
-  std::cout << "Relative: " << relativeError<double>(approx, exact) << '\n';
+  std::cout << "Absolute: ";
+  std::cout << Error::absoluteError<double>(approx, exact) << '\n';
+  std::cout << "Relative: ";
+  std::cout << Error::relativeError<double>(approx, exact) << '\n';
 
   return EXIT_SUCCESS;
 }
