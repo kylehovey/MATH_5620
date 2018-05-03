@@ -316,6 +316,20 @@ namespace Matrix {
       );
 
       /**
+       * Create a n-diagonal matrix using a vector for the diagonal
+       * @param size The size of the resultant matrix
+       * @param entries Entries to put across the diagonal
+       * @param offset Offset for entries to start off at
+       *  (entry 0 at (0, k) when offset is k)
+       * @return An n-diagonal matrix where n is the size of entries
+       */
+      static Matrix<T> genNDiag(
+          const uint& size,
+          const std::vector<T>& entries,
+          const uint& offset = 0
+      );
+
+      /**
        * Generate a matrix approximation to a differential
        *  operator with a given order and accuracy over
        *  a mesh

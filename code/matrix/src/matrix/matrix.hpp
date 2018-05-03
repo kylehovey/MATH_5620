@@ -794,6 +794,24 @@ namespace Matrix {
   }
 
   template <typename T>
+  Matrix<T> Matrix<T>::genNDiag(
+      const uint& size,
+      const std::vector<T>& entries,
+      const uint& offset
+  ) {
+    return Matrix<T>(size, size, [=](const uint& row, const uint& col) -> T {
+        const int start = row + offset;
+        const int end = start + entries.size() - 1;
+
+        if ((int) col >= start && (int) col <= end) {
+          return entries[(int) col - row - offset];
+        } else {
+          return 0;
+        }
+    });
+  }
+
+  template <typename T>
   Matrix<T> Matrix<T>::genFDMatrix(
       const uint& size,
       const uint& order,
@@ -801,16 +819,11 @@ namespace Matrix {
   ) {
     const auto coeffs = Matrix<T>::genFDCoeff(order, accuracy);
 
-    return Matrix<T>(size, size, [&](const uint& row, const uint& col) -> T {
-        const int start = row - 1;
-        const int end = start + coeffs.size() - 1;
-
-        if ((int) col >= start && (int) col <= end) {
-          return coeffs[(int) col - row + 1];
-        } else {
-          return 0;
-        }
-    });
+    return Matrix<T>::genNDiag(
+        size,
+        coeffs,
+        -std::floor(((double) coeffs.size()) / 2)
+    );
   }
 
   /* ===== Private Methods ===== */
