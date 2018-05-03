@@ -373,7 +373,7 @@ namespace Matrix {
   template <typename T>
   T Matrix<T>::getMax() const {
     const auto [ M, N ] = this->getSize();
-    T max = std::numeric_limits<T>::min();
+    T max = -std::numeric_limits<T>::max();
 
     for (uint row = 0; row < M; ++row) {
       for (uint col = 0; col < N; ++col) {
