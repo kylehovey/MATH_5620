@@ -47,8 +47,8 @@ namespace Advection {
 
     // Time-step operator
     const auto coeffs = (std::vector<T>) {
-      1 - a * spaceStep / timeStep,
-      a * spaceStep / timeStep
+      a * spaceStep / timeStep,
+      1 - a * spaceStep / timeStep
     };
     const auto A = Matrix::Matrix<T>::genNDiag(
         size - 2, 
@@ -72,8 +72,10 @@ namespace Advection {
         }
     );
 
+    std::cout << wholePicture << std::endl;
+
     // Output
-    Image::ImageWriter::matrixHeatmap("./upWinding.ppm", wholePicture);
+    Image::ImageWriter::matrixHeatmap("./upWinding.ppm", wholePicture, 1000);
   }
 
   /**
