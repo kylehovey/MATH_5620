@@ -13,6 +13,12 @@ layout: page
 
 **Description/Purpose**:
 
+The heat equation is a linear partial differential equation:
+
+# \\[ \frac{\partial u}{\partial t}  = k \frac{\partial^2 u}{ \partial x^2 } \\]
+
+Where \\( k \\) is some constant regulating diffusion.
+
 **Input**:
 
 **Output**:
