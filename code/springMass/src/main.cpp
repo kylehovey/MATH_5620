@@ -12,7 +12,7 @@ int main() {
       dyo = 5;
 
   // Generate the analytic solution
-  auto y = genSpringMass<double>(yo, dyo, m, gamma, k);
+  auto y = SpringMass::genSpringMass<double>(yo, dyo, m, gamma, k);
 
   // Output position at time t for 3 seconds (damped oscillation)
   for (double t = 0; t < 3; t += 0.1) {
