@@ -72,8 +72,6 @@ namespace Advection {
         }
     );
 
-    std::cout << wholePicture << std::endl;
-
     // Output
     Image::ImageWriter::matrixHeatmap("./upWinding.ppm", wholePicture, 1000);
   }
@@ -175,15 +173,17 @@ namespace Advection {
     });
 
     // Time-step operator
+    const auto alpha = a * spaceStep / (2 * timeStep);
+    const auto beta = a * a * spaceStep * spaceStep / (2 * timeStep * timeStep);
     const auto coeffs = (std::vector<T>) {
-      1 - a * spaceStep / timeStep,
-      a * spaceStep / timeStep,
-      4
+      beta - alpha,
+      4 * alpha - 2 * beta,
+      1 - 3 * alpha + beta
     };
     const auto A = Matrix::Matrix<T>::genNDiag(
         size - 2, 
         coeffs, 
-        -std::ceil(coeffs.size() / 2)
+        -2
     );
 
     // Evolve system in time
