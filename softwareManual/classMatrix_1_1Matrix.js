@@ -12,6 +12,7 @@ var classMatrix_1_1Matrix =
     [ "flatten", "classMatrix_1_1Matrix.html#afb5e8ac49f193a1e76977fc861ae51d7", null ],
     [ "genFDCoeff", "classMatrix_1_1Matrix.html#a8d652946a4cd7d66a30588a472c15491", null ],
     [ "genFDMatrix", "classMatrix_1_1Matrix.html#a62e9d39c56e9ed6b5b70e1c6a7da232a", null ],
+    [ "genNDiag", "classMatrix_1_1Matrix.html#ac797228fe107cf99fcb01e5416670304", null ],
     [ "getDiag", "classMatrix_1_1Matrix.html#ac0cadf9c6880b47f014bfd7165691ec7", null ],
     [ "getMax", "classMatrix_1_1Matrix.html#a96bb389bf300e93fc75a98c40a661508", null ],
     [ "getMin", "classMatrix_1_1Matrix.html#a4b87456fb23e6fa3c12899fa2f50c171", null ],

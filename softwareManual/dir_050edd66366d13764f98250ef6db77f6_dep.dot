@@ -5,10 +5,15 @@ digraph "code" {
   subgraph clusterdir_050edd66366d13764f98250ef6db77f6 {
     graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_050edd66366d13764f98250ef6db77f6.html"];
     dir_050edd66366d13764f98250ef6db77f6 [shape=plaintext label="code"];
+    dir_8bfd98f5c9c41d5d8227f4a333312a4a [shape=box label="advection" color="red" fillcolor="white" style="filled" URL="dir_8bfd98f5c9c41d5d8227f4a333312a4a.html"];
+    dir_5cecb22444d26a4d44419ca1b2c0f2f5 [shape=box label="cgPoisson" color="red" fillcolor="white" style="filled" URL="dir_5cecb22444d26a4d44419ca1b2c0f2f5.html"];
+    dir_6cdcb91a59bfe975bc50c8974bdced30 [shape=box label="diffCoeff" color="red" fillcolor="white" style="filled" URL="dir_6cdcb91a59bfe975bc50c8974bdced30.html"];
     dir_9d247c8ab4564ca29379f75a3deca5ef [shape=box label="epsilon" color="red" fillcolor="white" style="filled" URL="dir_9d247c8ab4564ca29379f75a3deca5ef.html"];
     dir_2209eac7ecc8a514a37290408d540b7b [shape=box label="error" color="red" fillcolor="white" style="filled" URL="dir_2209eac7ecc8a514a37290408d540b7b.html"];
     dir_02b9a6e4994eab4de9e3a47942b85eb9 [shape=box label="euler" color="red" fillcolor="white" style="filled" URL="dir_02b9a6e4994eab4de9e3a47942b85eb9.html"];
     dir_aa6045d1ac100e7010fa3f9a9eeba050 [shape=box label="explicitEulerDeux" color="red" fillcolor="white" style="filled" URL="dir_aa6045d1ac100e7010fa3f9a9eeba050.html"];
+    dir_a7f1f8dccf39e19aa9ef72585fb5cb7c [shape=box label="FDMMatrix" color="red" fillcolor="white" style="filled" URL="dir_a7f1f8dccf39e19aa9ef72585fb5cb7c.html"];
+    dir_f9daa077c0ad09464b1cdb83b44e7a42 [shape=box label="heatEquation" color="red" fillcolor="white" style="filled" URL="dir_f9daa077c0ad09464b1cdb83b44e7a42.html"];
     dir_cc740b9b0c6dc91b723fcd6d0bf4df80 [shape=box label="image" color="red" fillcolor="white" style="filled" URL="dir_cc740b9b0c6dc91b723fcd6d0bf4df80.html"];
     dir_233bf35a6f7e9357e0aacb74ffbda447 [shape=box label="implicitExperiment" color="red" fillcolor="white" style="filled" URL="dir_233bf35a6f7e9357e0aacb74ffbda447.html"];
     dir_d665b49bfc9060f5de6df8752b9fa11c [shape=box label="logistic" color="red" fillcolor="white" style="filled" URL="dir_d665b49bfc9060f5de6df8752b9fa11c.html"];
@@ -21,5 +26,7 @@ digraph "code" {
     dir_6ef61ca4f2c6bcd9f8d4ff1876e28a37 [shape=box label="springMass" color="red" fillcolor="white" style="filled" URL="dir_6ef61ca4f2c6bcd9f8d4ff1876e28a37.html"];
     dir_1d9830a2f0dcb4d055e15109f88476a5 [shape=box label="testCases" color="red" fillcolor="white" style="filled" URL="dir_1d9830a2f0dcb4d055e15109f88476a5.html"];
   }
-  dir_cc740b9b0c6dc91b723fcd6d0bf4df80->dir_da090391cf0fbcf770011b51df795fc9 [headlabel="1", labeldistance=1.5 headhref="dir_000026_000032.html"];
+  dir_cc740b9b0c6dc91b723fcd6d0bf4df80->dir_da090391cf0fbcf770011b51df795fc9 [headlabel="1", labeldistance=1.5 headhref="dir_000044_000049.html"];
+  dir_8bfd98f5c9c41d5d8227f4a333312a4a->dir_da090391cf0fbcf770011b51df795fc9 [headlabel="1", labeldistance=1.5 headhref="dir_000004_000049.html"];
+  dir_8bfd98f5c9c41d5d8227f4a333312a4a->dir_cc740b9b0c6dc91b723fcd6d0bf4df80 [headlabel="1", labeldistance=1.5 headhref="dir_000004_000044.html"];
 }

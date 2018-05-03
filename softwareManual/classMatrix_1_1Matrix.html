@@ -162,6 +162,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:ab0e868b944c276e9884048941d33ab07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d652946a4cd7d66a30588a472c15491"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix_1_1Matrix.html#a8d652946a4cd7d66a30588a472c15491">genFDCoeff</a> (const <a class="el" href="namespaceMatrix.html#ad1ec7c178c44209a6f1d30ba361cb30c">uint</a> &amp;order, const <a class="el" href="namespaceMatrix.html#ad1ec7c178c44209a6f1d30ba361cb30c">uint</a> &amp;accuracy)</td></tr>
 <tr class="separator:a8d652946a4cd7d66a30588a472c15491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac797228fe107cf99fcb01e5416670304"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classMatrix_1_1Matrix.html">Matrix</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix_1_1Matrix.html#ac797228fe107cf99fcb01e5416670304">genNDiag</a> (const <a class="el" href="namespaceMatrix.html#ad1ec7c178c44209a6f1d30ba361cb30c">uint</a> &amp;size, const std::vector&lt; T &gt; &amp;entries, const <a class="el" href="namespaceMatrix.html#ad1ec7c178c44209a6f1d30ba361cb30c">uint</a> &amp;offset=0)</td></tr>
+<tr class="separator:ac797228fe107cf99fcb01e5416670304"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62e9d39c56e9ed6b5b70e1c6a7da232a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classMatrix_1_1Matrix.html">Matrix</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatrix_1_1Matrix.html#a62e9d39c56e9ed6b5b70e1c6a7da232a">genFDMatrix</a> (const <a class="el" href="namespaceMatrix.html#ad1ec7c178c44209a6f1d30ba361cb30c">uint</a> &amp;size, const <a class="el" href="namespaceMatrix.html#ad1ec7c178c44209a6f1d30ba361cb30c">uint</a> &amp;order, const <a class="el" href="namespaceMatrix.html#ad1ec7c178c44209a6f1d30ba361cb30c">uint</a> &amp;accuracy=2)</td></tr>
 <tr class="separator:a62e9d39c56e9ed6b5b70e1c6a7da232a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -675,6 +677,61 @@ template&lt;typename T&gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ac797228fe107cf99fcb01e5416670304"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac797228fe107cf99fcb01e5416670304">&#9670;&nbsp;</a></span>genNDiag()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classMatrix_1_1Matrix.html">Matrix</a>&lt;T&gt; <a class="el" href="classMatrix_1_1Matrix.html">Matrix::Matrix</a>&lt; T &gt;::genNDiag </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespaceMatrix.html#ad1ec7c178c44209a6f1d30ba361cb30c">uint</a> &amp;&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>entries</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespaceMatrix.html#ad1ec7c178c44209a6f1d30ba361cb30c">uint</a> &amp;&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a n-diagonal matrix using a vector for the diagonal. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>The size of the resultant matrix </td></tr>
+    <tr><td class="paramname">entries</td><td>Entries to put across the diagonal </td></tr>
+    <tr><td class="paramname">offset</td><td>Offset for entries to start off at (entry 0 at (0, k) when offset is k) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An n-diagonal matrix where n is the size of entries </dd></dl>
 
 </div>
 </div>
@@ -2219,7 +2276,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00457">457</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00471">471</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -2245,7 +2302,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00460">460</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00474">474</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -2271,7 +2328,7 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00457">457</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="matrix_8h_source.html#l00471">471</a> of file <a class="el" href="matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
