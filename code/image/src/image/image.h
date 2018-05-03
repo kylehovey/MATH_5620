@@ -66,7 +66,8 @@ namespace Image {
     const auto [ m, n ] = grid.getSize();
     const double aspect = (double) n / m;
     const uint height = std::round((double) width / aspect);
-    const double pixelsPerCell = (double) width / m;
+    const double ppcX = (double) width / n;
+    const double ppcY = (double) width / m;
 
     outFile << width << " " << height << std::endl;
 
@@ -74,23 +75,24 @@ namespace Image {
     outFile << 255 << std::endl;
 
     // Determine range of values
-    const auto range = (grid.getMax() - grid.getMin()) / 2;
+    const auto min = grid.getMin();
+    const auto range = grid.getMax() - min;
 
     // Color range
     const auto wheel = Image::lerp(Image::Blue, Image::Red);
 
     // For each pixel
-    for (uint x = 0; x < width; ++x) {
-      for (uint y = 0; y < height; ++y) {
+    for (uint y = 0; y < height; ++y) {
+      for (uint x = 0; x < width; ++x) {
         // Determine cell of matrix this pixel is iside of
-        const auto row = std::floor((double) x / pixelsPerCell);
-        const auto col = std::floor((double) y / pixelsPerCell);
+        const auto row = std::floor((double) y / ppcY);
+        const auto col = std::floor((double) x / ppcX);
 
         // Get value in cell
         const auto val = grid.getVal(row, col);
 
         // Get color for cell
-        const auto color = wheel((double) val / range);
+        const auto color = wheel((double) (val - min) / range);
 
         // Write value out
         outFile << color.R << " ";
@@ -102,10 +104,6 @@ namespace Image {
     }
 
     outFile.close();
-
-    (void) pixelsPerCell;
-    (void) grid;
-    (void) width;
   }
 };
 
