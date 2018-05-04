@@ -7,20 +7,34 @@ layout: page
 
 ## Lax Wendroff Method (calculations from p. 213 in textbook)
 
-# \\[ g(\xi) = 1 - \frac{1}{2}v(e^{i\xi h} - e^{-i\xi h}) + \frac{1}{2}v^2(e^{i\xi h} - 2 + e^{-i\xi h}) \\]
+## \\[ g(\xi) = 1 - \frac{1}{2}v(e^{i\xi h} - e^{-i\xi h}) + \frac{1}{2}v^2(e^{i\xi h} - 2 + e^{-i\xi h}) \\]
 
-# \\[ = 1 - iv\sin(\xi h) + v^2(\cos(\xi h) - 1) \\]
+## \\[ = 1 - iv\sin(\xi h) + v^2(\cos(\xi h) - 1) \\]
 
-# \\[ = 1 - iv \Big( 2\sin(\frac{\xi h}{2})cos(\frac{\xi h}{2} \Big) + v^2 \Big( 2sin^2(\frac{\xi h}{2}) \Big) \\]
+## \\[ = 1 - iv \Big( 2\sin(\frac{\xi h}{2})cos(\frac{\xi h}{2} \Big) + v^2 \Big( 2sin^2(\frac{\xi h}{2}) \Big) \\]
 
-# \\[ \implies |g(\xi)|^2 = \Big( 1 - 2sin^2(\frac{\xi h}{2}) \Big)^2 + 4\sin^2(\frac{\xi h}{2})cos^2(\frac{\xi h}{2} \\]
+## \\[ \implies |g(\xi)|^2 = \Big( 1 - 2sin^2(\frac{\xi h}{2}) \Big)^2 + 4\sin^2(\frac{\xi h}{2})cos^2(\frac{\xi h}{2}) \\]
 
-# \\[ = 1 - 4v^2(1 - v^2)sin^4(\frac{\xi h}{2}) \\]
+## \\[ = 1 - 4v^2(1 - v^2)sin^4(\frac{\xi h}{2}) \\]
 
-# \\[ \implies \text{stable for } |v| \leq 1 \\]
+## \\[ \implies \text{stable for } |v| \leq 1 \\]
 
 ## Beam Warming Method
 
-# \\[ g(\xi) = 1 - \frac{v}{2}(3 - 4e^{-i\xi h} + e^{-i\xi 2h}) + \frac{v^2}{2}(1 - 2e^{-i\xi h} + e^{-i\xi 2h}) \\]
+## \\[ g(\xi) = 1 - \frac{v}{2}(3 - 4e^{-i\xi h} + e^{-i\xi 2h}) + \frac{v^2}{2}(1 - 2e^{-i\xi h} + e^{-i\xi 2h}) \\]
 
-# \\[ \implies \text{stable for } 0 \leq v \leq 2 \\]
+## \\[ \implies e^{i\xi h} g(\xi) = e^{i\xi h} - \frac{v}{2}(3e^{i\xi h} - 4 + e^{-i\xi h}) + \frac{v^2}{2}(e^{i\xi h} - 2 + e^{-i\xi h}) \\]
+
+## \\[ = e^{i\xi h} - \frac{v}{2}(3e^{i\xi h} - 4 + e^{-i\xi h}) - v^2 + v^2\cos(\xi h) \\]
+
+## \\[ = e^{i\xi h} - \frac{v}{2}(2e^{i\xi h} - 4) + v^2(\cos(\xi h) - 1) \\]
+
+## \\[ = e^{i\xi h}(1 - v) - 2v + v\cos(\xi h) + v^2(\cos(\xi h) - 1) \\]
+
+## \\[ = e^{i\xi h}(1 - v) - v(2 - \cos(\xi h)) + v^2(\cos(\xi h) - 1) \\]
+
+## \\[ = (\cos(\xi h) + i\sin(\xi h))(1 - v) - v(2 - \cos(\xi h)) + v^2(\cos(\xi h) - 1) \\]
+
+## \\[ \implies |g(\xi)|^2 = sin^2(\xi h) + \Big( \cos(\xi h)(1 - v) - v(2 - \cos(\xi h)) + v^2(\cos(\xi h) - 1) \Big)^2 \\]
+
+## \\[ \implies \text{stable for } 0 \leq v \leq 2 \\] (I'm not sure how to algebraically prove this, but the CFL number of 2 is verified from the textbook)
